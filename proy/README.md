@@ -10,24 +10,78 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 │                    Punto de Entrada Único                   │
 └─────────────────────┬───────────────────────────────────────┘
                       │
-        ┌─────────────┼─────────────┐
-        │             │             │
-        ▼             ▼             ▼
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│  EUREKA     │ │MICROCLIENTES│ │MICROCUENTAS │
-│  SERVER     │ │   (8080)    │ │   (8081)    │
-│  (8761)     │ │             │ │             │
-└─────────────┘ └─────────────┘ └─────────────┘
-        │             │             │
-        └─────────────┼─────────────┘
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    EUREKA SERVER                            │
+│                   (Puerto 8761)                             │
+│                                                             │
+│ • Service Discovery                                         │
+│ • Health Monitoring                                         │
+│ • Load Balancing                                            │
+│ • Dashboard de monitoreo                                    │
+│ • Auto-registration de servicios                           │
+└─────────────────────┬───────────────────────────────────────┘
                       │
         ┌─────────────┼─────────────┐
         │             │             │
         ▼             ▼             ▼
 ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ POSTGRESQL  │ │ POSTGRESQL  │ │ POSTGRESQL  │
-│  EUREKA     │ │ CLIENTES    │ │  CUENTAS    │
+│MICROCLIENTES│ │MICROCUENTAS │ │   GATEWAY   │
+│(Puerto 0*)  │ │(Puerto 0*)  │ │(Puerto 8083)│
+│             │ │             │ │             │
+│• Gestión    │ │• Gestión    │ │• Ruteo      │
+│  Personas   │ │  Cuentas    │ │• Filtros    │
+│• Gestión    │ │• Movimientos│ │• Load Bal.  │
+│  Clientes   │ │• Reportes   │ │• CORS       │
 └─────────────┘ └─────────────┘ └─────────────┘
+        │             │             |
+        └─────────────┼─────────────┘
+                      │
+        ┌─────────────┼
+        │             │             
+        ▼             ▼             
+┌─────────────┐ ┌─────────────┐ 
+│ POSTGRESQL  │ │ POSTGRESQL  │ 
+│ CLIENTES    │ │  CUENTAS    │ 
+│(Puerto 5432)│ │(Puerto 5433)│ 
+└─────────────┘ └─────────────┘ 
+
+* Puerto 0 = Puerto aleatorio para múltiples instancias
+```
+
+### **Arquitectura de Despliegue Cloud (Azure AKS)**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              CLIENTE                                       │
+└─────────────────────┬───────────────────────────────────────────────────────┘
+                      │
+                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    AZURE AKS CLUSTER                                      │
+│                                                                             │
+│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐                │
+│ │   API GATEWAY   │ │  EUREKA SERVER  │ │  LOAD BALANCER  │                │
+│ │   (Puerto 8083) │ │  (Puerto 8761)  │ │   (Azure LB)    │                │
+│ └─────────────────┘ └─────────────────┘ └─────────────────┘                │
+│                                                                             │
+│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐                │
+│ │ MICROCLIENTES   │ │ MICROCUENTAS    │ │   NAMESPACE     │                │
+│ │ (2 Replicas)    │ │ (2 Replicas)    │ │ microservicios  │                │
+│ │ (Puertos 0*)    │ │ (Puertos 0*)    │ │                 │                │
+│ └─────────────────┘ └─────────────────┘ └─────────────────┘                │
+└─────────────────────┬───────────────────────────────────────────────────────┘
+                      │
+        ┌─────────────┼─────────────┐
+        │             │             │
+        ▼             ▼             ▼
+┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+│ AZURE       │ │ AZURE       │ │ AZURE       │
+│ POSTGRESQL  │ │ POSTGRESQL  │ │ CONTAINER   │
+│ CLIENTES    │ │ CUENTAS     │ │ REGISTRY    │
+└─────────────┘ └─────────────┘ └─────────────┘
+
+* Puerto 0 = Puerto aleatorio asignado por Kubernetes
 ```
 
 ## 📋 Componentes del Sistema
@@ -36,6 +90,7 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Service Discovery para los microservicios
 - Registro y descubrimiento automático de servicios
 - Dashboard de monitoreo en `http://localhost:8761`
+- **No requiere base de datos** - usa memoria interna para registro
 
 ### 🚪 **API Gateway (Puerto 8083)**
 - Punto de entrada único para todas las APIs
@@ -43,11 +98,17 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Filtros de logging y monitoreo
 - Balanceo de carga automático
 
-### 👥 **Microservicio: microclientes (Puerto 8080)**
+### 👥 **Microservicio: microclientes (Puerto 0*)**
 Gestiona la información de personas y clientes del banco.
+- **Puerto aleatorio** para permitir múltiples instancias
+- Se registra automáticamente en Eureka
+- Descubierto dinámicamente por el Gateway
 
-### 💰 **Microservicio: microcuentas (Puerto 8081)**
+### 💰 **Microservicio: microcuentas (Puerto 0*)**
 Maneja la gestión de cuentas bancarias, movimientos y reportes financieros.
+- **Puerto aleatorio** para permitir múltiples instancias
+- Se registra automáticamente en Eureka
+- Descubierto dinámicamente por el Gateway
 
 ## 🚀 Opciones de Despliegue
 
@@ -72,8 +133,23 @@ docker-compose ps
 #### URLs de Acceso
 - **Eureka Server:** http://localhost:8761
 - **API Gateway:** http://localhost:8083
-- **Microclientes:** http://localhost:8080
-- **Microcuentas:** http://localhost:8081
+- **Microclientes:** http://localhost:8080 (puerto fijo en Docker)
+- **Microcuentas:** http://localhost:8081 (puerto fijo en Docker)
+
+#### Comandos Útiles
+```bash
+# Ver logs en tiempo real
+docker-compose logs -f
+
+# Ver logs de un servicio específico
+docker-compose logs -f microclientes
+
+# Detener todos los servicios
+docker-compose down
+
+# Reconstruir y reiniciar
+docker-compose up --build -d
+```
 
 ### 2. ☁️ Despliegue en Azure AKS (Recomendado para Producción)
 
@@ -100,6 +176,46 @@ chmod +x deploy.sh
 - **PostgreSQL (2 instancias):** ~$50/mes
 - **Load Balancer:** ~$18/mes
 - **Total:** ~$219/mes
+
+### 3. 🔧 Despliegue Manual (Desarrollo)
+
+#### Orden de Inicio Recomendado
+
+```bash
+# 1. Iniciar Eureka Server (Puerto 8761)
+cd proy-main/proy/eureka-server
+.\mvnw spring-boot:run
+
+# 2. Iniciar Microclientes (Puerto aleatorio)
+cd proy-main/proy/microclientes/microclientes
+.\mvnw spring-boot:run
+
+# 3. Iniciar Microcuentas (Puerto aleatorio)
+cd proy-main/proy/microcuentas/microcuentas
+.\mvnw spring-boot:run
+
+# 4. Iniciar Gateway (Puerto 8083)
+cd proy-main/proy/gateway/gateway
+.\mvnw spring-boot:run
+```
+
+#### Scripts Automatizados
+
+#### Para Desarrollo (Puertos Fijos):
+```bash
+run-dev-mode.bat
+```
+- Eureka: `http://localhost:8761`
+- Microclientes: `http://localhost:8080`
+- Microcuentas: `http://localhost:8081`
+- Gateway: `http://localhost:8083`
+
+#### Para Producción/Testing (Puertos Aleatorios):
+```bash
+run-multiple-instances.bat
+```
+- Cada instancia tendrá puerto aleatorio
+- Revisa Eureka Dashboard para ver puertos asignados
 
 ## 🔧 Configuración de Bases de Datos
 
@@ -200,7 +316,7 @@ Content-Type: application/json
   "clienteid": "cli_carlos",
   "contrasena": "clave123",
   "estado": "ACTIVO",
-  "identificacion": "1001"
+  "identificacion": "1001" 
 }
 ```
 
@@ -232,22 +348,22 @@ POST http://localhost:8083/cuentas/cuentas
 Content-Type: application/json
 
 {
-  "numeroCuenta": "1001001001",
-  "tipoCuenta": "AHORROS",
-  "saldoInicial": 500.00,
-  "estado": "ACTIVA",
-  "clienteId": "cli_carlos"
+    "numeroCuenta": "1001001001",
+    "tipoCuenta": "AHORROS",
+    "saldoInicial": 500.00,
+    "estado": "ACTIVA",
+    "clienteId": "cli_carlos" 
 }
 ```
 
 **Respuesta:**
 ```json
 {
-  "numeroCuenta": "1001001001",
-  "tipoCuenta": "AHORROS",
-  "saldoInicial": 500.00,
-  "estado": "ACTIVA",
-  "fechaCreacion": "2024-05-20T10:00:00",
+    "numeroCuenta": "1001001001",
+    "tipoCuenta": "AHORROS",
+    "saldoInicial": 500.00,
+    "estado": "ACTIVA",
+    "fechaCreacion": "2024-05-20T10:00:00",
   "fechaActualizacion": "2024-05-20T10:00:00",
   "cliente": {
     "clienteid": "cli_carlos",
@@ -284,18 +400,18 @@ Content-Type: application/json
 **Respuesta:**
 ```json
 {
-  "id": 1,
-  "fecha": "2024-05-20T10:30:00",
-  "tipoMovimiento": "DEPOSITO",
-  "valor": 100.00,
-  "saldo": 600.00,
-  "numeroCuenta": "1001001001",
-  "cliente": {
+    "id": 1,
+    "fecha": "2024-05-20T10:30:00",
+    "tipoMovimiento": "DEPOSITO",
+    "valor": 100.00,
+    "saldo": 600.00,
+    "numeroCuenta": "1001001001",
+    "cliente": {
     "clienteid": "cli_carlos",
     "estado": "ACTIVO",
     "persona": {
       "identificacion": "1001",
-      "nombre": "Carlos Gomez",
+        "nombre": "Carlos Gomez",
       "genero": "M",
       "edad": 35,
       "direccion": "Av. Siempre Viva 742",
@@ -335,11 +451,11 @@ Content-Type: application/json
     "clienteid": "cli_carlos",
     "estado": "ACTIVO",
     "persona": {
-      "identificacion": "1001",
+        "identificacion": "1001",
       "nombre": "Carlos Gomez",
       "genero": "M",
       "edad": 35,
-      "direccion": "Av. Siempre Viva 742",
+        "direccion": "Av. Siempre Viva 742",
       "telefono": "555-9876"
     }
   }
@@ -358,33 +474,33 @@ GET http://localhost:8083/cuentas/reportes/estado-cuenta/1001001001
 **Respuesta:**
 ```json
 {
-  "cuenta": {
-    "numeroCuenta": "1001001001",
-    "tipoCuenta": "AHORROS",
-    "saldoInicial": 500.00,
-    "estado": "ACTIVA",
-    "fechaCreacion": "2024-05-20T10:00:00",
+    "cuenta": {
+        "numeroCuenta": "1001001001",
+        "tipoCuenta": "AHORROS",
+        "saldoInicial": 500.00,
+        "estado": "ACTIVA",
+        "fechaCreacion": "2024-05-20T10:00:00",
     "fechaActualizacion": "2024-05-20T11:00:00"
-  },
-  "cliente": {
+    },
+    "cliente": {
     "clienteid": "cli_carlos",
     "estado": "ACTIVO",
     "persona": {
       "identificacion": "1001",
-      "nombre": "Carlos Gomez",
+        "nombre": "Carlos Gomez",
       "genero": "M",
       "edad": 35,
-      "direccion": "Av. Siempre Viva 742",
+        "direccion": "Av. Siempre Viva 742",
       "telefono": "555-9876"
     }
-  },
-  "movimientos": [
-    {
-      "id": 1,
-      "fecha": "2024-05-20T10:30:00",
-      "tipoMovimiento": "DEPOSITO",
-      "valor": 100.00,
-      "saldo": 600.00
+    },
+    "movimientos": [
+        {
+            "id": 1,
+            "fecha": "2024-05-20T10:30:00",
+            "tipoMovimiento": "DEPOSITO",
+            "valor": 100.00,
+            "saldo": 600.00
     },
     {
       "id": 2,
@@ -496,7 +612,7 @@ GET http://localhost:8083/cuentas/reportes/movimientos?fechaInicio=2024-05-20T00
 ## 🔧 Comandos de Gestión
 
 ### **Docker (Desarrollo Local)**
-```bash
+    ```bash
 # Iniciar todos los servicios
 docker-compose up -d
 
@@ -517,7 +633,7 @@ docker-compose ps
 ```
 
 ### **Terraform (Producción Azure)**
-```bash
+    ```bash
 # Navegar al directorio de Terraform
 cd terraform
 
@@ -538,7 +654,7 @@ terraform destroy
 ```
 
 ### **Kubernetes (Después del despliegue en AKS)**
-```bash
+    ```bash
 # Configurar kubectl
 az aks get-credentials --resource-group rg-microservicios --name aks-microservicios
 
@@ -588,13 +704,13 @@ kubectl port-forward svc/gateway 8083:8083 -n microservicios
 - URL: http://localhost:8761
 - Muestra todos los servicios registrados
 - Estado de salud de cada servicio
-- Información de instancias
+- Información de instancias y puertos asignados
 
 ### **Health Checks**
 - **Eureka Server:** http://localhost:8761/actuator/health
 - **API Gateway:** http://localhost:8083/actuator/health
-- **Microclientes:** http://localhost:8080/actuator/health
-- **Microcuentas:** http://localhost:8081/actuator/health
+- **Microclientes:** http://localhost:8080/actuator/health (o puerto asignado)
+- **Microcuentas:** http://localhost:8081/actuator/health (o puerto asignado)
 
 ### **Métricas de Actuator**
 - `/actuator/metrics` - Métricas del sistema
@@ -639,8 +755,471 @@ kubectl port-forward svc/gateway 8083:8083 -n microservicios
 3. Verificar conectividad de bases de datos
 4. Comprobar configuración de Eureka Server
 5. Validar endpoints del API Gateway
+6. Verificar puertos asignados en Eureka Dashboard
+
+---
+
+## 🏗️ Patrones de Diseño Implementados
+
+### **Patrones Arquitectónicos Principales**
+
+#### **1. Service Discovery Pattern (Eureka)**
+**Propósito**: Registro y descubrimiento automático de servicios
+**Implementación**: Netflix Eureka Server
+**Ubicación**: `eureka-server/src/main/java/com/proyecto/eureka_server/EurekaServerApplication.java`
+**Beneficios**:
+- Registro automático de microservicios al iniciar
+- Descubrimiento dinámico de instancias disponibles
+- Load balancing automático entre múltiples instancias
+- Health monitoring en tiempo real
+- Auto-cancelación de servicios caídos
+
+```java
+@EnableEurekaServer
+@SpringBootApplication
+public class EurekaServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(EurekaServerApplication.class, args);
+    }
+}
+```
+
+#### **2. API Gateway Pattern (Spring Cloud Gateway)**
+**Propósito**: Punto de entrada único para todas las APIs
+**Implementación**: Spring Cloud Gateway
+**Ubicación**: `gateway/gateway/src/main/java/com/proyecto/gateway/GatewayApplication.java`
+**Beneficios**:
+- Centralización de cross-cutting concerns
+- Simplificación del cliente
+- Seguridad centralizada
+- Monitoreo unificado
+- Ruteo inteligente con Service Discovery
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: clientes-service
+          uri: lb://microclientes
+          predicates:
+            - Path=/clientes/**
+```
+
+#### **3. Repository Pattern**
+**Propósito**: Abstracción del acceso a datos
+**Implementación**: Spring Data JPA
+**Ubicación**: 
+- `microclientes/microclientes/src/main/java/com/proyecto/microclientes/repository/`
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/repository/`
+**Beneficios**:
+- Separación de lógica de negocio y acceso a datos
+- Facilita testing con mocks
+- Independencia de la tecnología de persistencia
+
+```java
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, String> {
+    Optional<Cliente> findByClienteid(String clienteid);
+}
+```
+
+#### **4. Service Layer Pattern**
+**Propósito**: Lógica de negocio centralizada
+**Implementación**: @Service
+**Ubicación**: 
+- `microclientes/microclientes/src/main/java/com/proyecto/microclientes/service/`
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/service/`
+**Beneficios**:
+- Separación de lógica de negocio
+- Reutilización de código
+- Facilita testing
+
+```java
+@Service
+public class ClienteService {
+    public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
+        // Lógica de negocio
+    }
+}
+```
+
+#### **5. DTO (Data Transfer Object) Pattern**
+**Propósito**: Transferencia de datos entre capas
+**Implementación**: DTOs específicos para cada operación
+**Ubicación**: 
+- `microclientes/microclientes/src/main/java/com/proyecto/microclientes/dto/`
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/dto/`
+**Beneficios**:
+- Separación de entidades de dominio y datos de transferencia
+- Control de qué datos se exponen
+- Versionado de APIs
+
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClienteDTO {
+    private String clienteid;
+    private String estado;
+    private PersonaDTO persona;
+}
+```
+
+#### **6. MVC (Model-View-Controller) Pattern**
+**Propósito**: Separación de responsabilidades en la capa de presentación
+**Implementación**: Spring MVC
+**Ubicación**: 
+- `microclientes/microclientes/src/main/java/com/proyecto/microclientes/controller/`
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/controller/`
+**Beneficios**:
+- Separación clara de responsabilidades
+- Facilita testing y mantenimiento
+- Reutilización de componentes
+
+```java
+@RestController
+@RequestMapping("/clientes")
+public class ClienteController {
+    @PostMapping
+    public ResponseEntity<ClienteDTO> crearCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
+        // Controller: maneja requests HTTP
+        // Model: ClienteDTO
+        // View: JSON Response
+    }
+}
+```
+
+#### **7. Dependency Injection Pattern**
+**Propósito**: Inversión de control y gestión de dependencias
+**Implementación**: Spring IoC Container
+**Ubicación**: Todo el proyecto (anotaciones @Autowired, @Inject)
+**Beneficios**:
+- Desacoplamiento de componentes
+- Facilita testing con mocks
+- Gestión automática del ciclo de vida
+
+```java
+@Service
+public class ClienteService {
+    @Autowired  // Dependency Injection
+    private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private ModelMapper modelMapper;
+}
+```
+
+#### **8. Layered Architecture Pattern**
+**Propósito**: Separación de responsabilidades por capas
+**Implementación**: Estructura de paquetes organizada
+**Ubicación**: Estructura de directorios en cada microservicio
+**Beneficios**:
+- Separación clara de responsabilidades
+- Facilita mantenimiento y testing
+- Escalabilidad por capas
+
+```
+com.proyecto.microclientes/
+├── controller/    # Capa de presentación (MVC)
+├── service/       # Capa de negocio (Service Layer)
+├── repository/    # Capa de datos (Repository)
+├── entity/        # Modelo de dominio (Entity)
+├── dto/          # Objetos de transferencia (DTO)
+├── config/       # Configuración (Configuration)
+└── exception/    # Manejo de errores (Exception Handler)
+```
+
+### **Patrones Creacionales**
+
+#### **9. Singleton Pattern**
+**Propósito**: Garantizar una sola instancia de una clase
+**Implementación**: Spring Beans (por defecto)
+**Ubicación**: Todas las clases con anotaciones @Service, @Repository, @Configuration
+**Beneficios**:
+- Control de instancias
+- Gestión de recursos
+- Consistencia de estado
+
+```java
+@Service  // Singleton por defecto en Spring
+public class ClienteService {
+    // Una sola instancia por contexto de aplicación
+}
+```
+
+#### **10. Factory Method Pattern**
+**Propósito**: Crear objetos sin especificar su clase exacta
+**Implementación**: Spring Framework (Bean Factory)
+**Ubicación**: 
+- `microclientes/microclientes/src/main/java/com/proyecto/microclientes/config/`
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/config/`
+**Beneficios**:
+- Flexibilidad en la creación de objetos
+- Encapsulación de lógica de creación
+- Extensibilidad
+
+```java
+@Configuration
+public class ModelMapperConfig {
+    @Bean  // Factory Method para crear ModelMapper
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+}
+```
+
+#### **11. Builder Pattern**
+**Propósito**: Construir objetos complejos paso a paso
+**Implementación**: Lombok @Builder
+**Ubicación**: DTOs y entidades en ambos microservicios
+**Beneficios**:
+- Construcción flexible de objetos
+- Inmutabilidad
+- Legibilidad del código
+
+```java
+@Data
+@Builder  // Patrón Builder automático
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClienteDTO {
+    private String clienteid;
+    private String estado;
+    private PersonaDTO persona;
+}
+```
+
+### **Patrones Estructurales**
+
+#### **12. Adapter Pattern**
+**Propósito**: Permitir que interfaces incompatibles trabajen juntas
+**Implementación**: ModelMapper
+**Ubicación**: Servicios en ambos microservicios
+**Beneficios**:
+- Integración de sistemas incompatibles
+- Reutilización de código existente
+- Flexibilidad en la interfaz
+
+```java
+@Service
+public class ClienteService {
+    @Autowired
+    private ModelMapper modelMapper;  // Adapter para conversión
+    
+    public ClienteDTO convertirAEntidad(Cliente cliente) {
+        return modelMapper.map(cliente, ClienteDTO.class);  // Adaptación
+    }
+}
+```
+
+#### **13. Facade Pattern**
+**Propósito**: Proporcionar una interfaz simplificada a un subsistema complejo
+**Implementación**: API Gateway
+**Ubicación**: `gateway/gateway/src/main/java/com/proyecto/gateway/`
+**Beneficios**:
+- Simplificación de la interfaz del cliente
+- Reducción de acoplamiento
+- Encapsulación de complejidad
+
+```java
+// El Gateway actúa como Facade para todos los microservicios
+// Simplifica la interfaz del cliente ocultando la complejidad interna
+@SpringBootApplication
+@EnableDiscoveryClient
+public class GatewayApplication {
+    // Facade para todos los microservicios
+}
+```
+
+#### **14. Proxy Pattern**
+**Propósito**: Proporcionar un sustituto o marcador de posición para otro objeto
+**Implementación**: OpenFeign
+**Ubicación**: `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/client/`
+**Beneficios**:
+- Control de acceso a objetos
+- Caching y optimización
+- Logging y monitoreo
+
+```java
+@FeignClient(name = "microclientes")  // Proxy para comunicación HTTP
+public interface ClienteClient {
+    @GetMapping("/clientes/{id}")
+    ClienteDTO obtenerCliente(@PathVariable("id") String id);
+}
+```
+
+### **Patrones de Comportamiento**
+
+#### **15. Template Method Pattern**
+**Propósito**: Definir el esqueleto de un algoritmo en una clase base
+**Implementación**: Spring Boot Application
+**Ubicación**: Clases principales de cada microservicio
+**Beneficios**:
+- Reutilización de código
+- Extensibilidad
+- Control del flujo de ejecución
+
+```java
+@SpringBootApplication
+public class MicroclientesApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MicroclientesApplication.class, args);  // Template Method
+    }
+}
+```
+
+#### **16. Strategy Pattern**
+**Propósito**: Definir una familia de algoritmos y hacerlos intercambiables
+**Implementación**: Diferentes estrategias de validación
+**Ubicación**: 
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/service/`
+**Beneficios**:
+- Flexibilidad en algoritmos
+- Eliminación de condicionales complejos
+- Extensibilidad
+
+```java
+@Service
+public class MovimientoService {
+    public void validarMovimiento(MovimientoDTO movimiento) {
+        // Diferentes estrategias según el tipo de movimiento
+        if ("RETIRO".equals(movimiento.getTipoMovimiento())) {
+            validarRetiro(movimiento);
+        } else if ("DEPOSITO".equals(movimiento.getTipoMovimiento())) {
+            validarDeposito(movimiento);
+        }
+    }
+}
+```
+
+#### **17. Observer Pattern**
+**Propósito**: Definir una dependencia uno-a-muchos entre objetos
+**Implementación**: Spring Events (preparado)
+**Ubicación**: Preparado para implementar en ambos microservicios
+**Beneficios**:
+- Desacoplamiento entre componentes
+- Notificaciones automáticas
+- Extensibilidad
+
+```java
+// Preparado para implementar eventos
+@Component
+public class ApplicationEventListener {
+    @EventListener
+    public void handleClienteCreado(ClienteCreadoEvent event) {
+        // Observador de eventos
+    }
+}
+```
+
+#### **18. Exception Handler Pattern**
+**Propósito**: Manejo centralizado de excepciones
+**Implementación**: @ControllerAdvice
+**Ubicación**: 
+- `microclientes/microclientes/src/main/java/com/proyecto/microclientes/exception/`
+- `microcuentas/microcuentas/src/main/java/com/proyecto/microcuentas/exception/`
+**Beneficios**:
+- Respuestas de error consistentes
+- Logging centralizado
+- Separación de lógica de manejo de errores
+
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(SaldoInsuficienteException.class)
+    public ResponseEntity<ErrorResponse> handleSaldoInsuficiente(SaldoInsuficienteException e) {
+        return ResponseEntity.badRequest()
+            .body(new ErrorResponse("SaldoInsuficienteException", e.getMessage()));
+    }
+}
+```
+
+### **Patrones de Comunicación**
+
+#### **19. Client-Server Pattern**
+**Propósito**: Separación de responsabilidades entre cliente y servidor
+**Implementación**: Arquitectura REST
+**Ubicación**: Comunicación entre microservicios
+**Beneficios**:
+- Separación de responsabilidades
+- Escalabilidad independiente
+- Mantenimiento simplificado
+
+```java
+// Cliente (microcuentas) → Servidor (microclientes)
+@FeignClient(name = "microclientes")
+public interface ClienteClient {
+    @GetMapping("/clientes/{id}")
+    ClienteDTO obtenerCliente(@PathVariable("id") String id);
+}
+```
+
+#### **20. Multiple Instance Pattern**
+**Propósito**: Ejecutar múltiples instancias del mismo servicio
+**Implementación**: Puertos aleatorios (`server.port=0`)
+**Ubicación**: `application.properties` de cada microservicio
+**Beneficios**:
+- Alta disponibilidad
+- Load balancing automático
+- Escalabilidad horizontal
+- Zero-downtime deployments
+
+```properties
+# Configuración para múltiples instancias
+server.port=0
+eureka.instance.instance-id=${spring.application.name}:${random.uuid}
+```
+
+## 📊 Resumen de Patrones Implementados
+
+| Categoría | Patrón | Implementación | Ubicación | Estado |
+|-----------|--------|----------------|-----------|---------|
+| **Arquitectónicos** | Service Discovery | Eureka Server | `eureka-server/` | ✅ |
+| | API Gateway | Spring Cloud Gateway | `gateway/gateway/` | ✅ |
+| | Repository | Spring Data JPA | `repository/` | ✅ |
+| | Service Layer | @Service | `service/` | ✅ |
+| | DTO | DTOs específicos | `dto/` | ✅ |
+| | MVC | Spring MVC | `controller/` | ✅ |
+| | Dependency Injection | Spring IoC | Todo el proyecto | ✅ |
+| | Layered Architecture | Estructura de paquetes | Estructura de directorios | ✅ |
+| **Creacionales** | Singleton | Spring Beans | @Service, @Repository | ✅ |
+| | Factory Method | Spring Bean Factory | @Configuration | ✅ |
+| | Builder | Lombok @Builder | DTOs y entidades | ✅ |
+| **Estructurales** | Adapter | ModelMapper | Servicios | ✅ |
+| | Facade | API Gateway | `gateway/` | ✅ |
+| | Proxy | OpenFeign | `client/` | ✅ |
+| **Comportamiento** | Template Method | Spring Boot | Clases principales | ✅ |
+| | Strategy | Validaciones | Servicios | ✅ |
+| | Observer | Spring Events | Preparado | ✅ |
+| | Exception Handler | @ControllerAdvice | `exception/` | ✅ |
+| **Comunicación** | Client-Server | REST APIs | Comunicación entre servicios | ✅ |
+| | Multiple Instance | Puertos aleatorios | `application.properties` | ✅ |
+
+## 🎯 Beneficios de los Patrones Implementados
+
+### **Arquitectura Sólida**
+- **Separación de responsabilidades** clara
+- **Escalabilidad** horizontal y vertical
+- **Mantenibilidad** del código
+- **Testabilidad** de componentes
+
+### **Resiliencia**
+- **Service Discovery** para alta disponibilidad
+- **Load Balancing** automático
+- **Health Checks** para monitoreo
+- **Manejo de errores** centralizado
+
+### **Flexibilidad**
+- **Múltiples instancias** por servicio
+- **Comunicación declarativa** entre servicios
+- **Configuración centralizada**
+- **Despliegue independiente**
 
 ---
 
 **¡Disfruta usando el sistema de microservicios bancarios! 🎉**
-
