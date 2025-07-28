@@ -1,28 +1,5 @@
 # 🔄 Flujos Completos del Sistema Bancario
 
-## 📊 Diagrama de Flujo General
-
-```mermaid
-graph TD
-    A[Cliente/Frontend] --> B[API Gateway :8083]
-    B --> C{¿Qué servicio?}
-    
-    C -->|Clientes| D[Microclientes :8080]
-    C -->|Cuentas/Movimientos/Reportes| E[Microcuentas :8081]
-    
-    D --> F[(PostgreSQL<br/>microclientesdb)]
-    E --> G[(PostgreSQL<br/>microcuentasdb)]
-    
-    E -.->|Feign Client| D
-    
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style D fill:#f3e5f5
-    style E fill:#e8f5e8
-    style F fill:#ffebee
-    style G fill:#ffebee
-```
-
 ## 🏦 Flujo 1: Apertura de Cuenta Bancaria
 
 ### **Secuencia Completa**
