@@ -1,0 +1,7 @@
+com\proyecto\microclientes\repository\PersonaRepositoryTest.class
+com\proyecto\microclientes\MicroclientesApplicationTests.class
+com\proyecto\microclientes\repository\ClienteRepositoryTest.class
+com\proyecto\microclientes\entity\ClienteTest.class
+com\proyecto\microclientes\entity\PersonaTest.class
+com\proyecto\microclientes\integration\ClienteIntegrationTest.class
+com\proyecto\microclientes\service\ClienteServiceTest.class

@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  # Base de datos para microclientes
+  postgres-clientes:
+    image: postgres:15
+    container_name: postgres-clientes
+    environment:
+      POSTGRES_DB: microclientesdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_clientes_data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  # Base de datos para microcuentas
+  postgres-cuentas:
+    image: postgres:15
+    container_name: postgres-cuentas
+    environment:
+      POSTGRES_DB: microcuentasdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_cuentas_data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  # Eureka Server
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - postgres-clientes
+      - postgres-cuentas
+    networks:
+      - microservices-network
+
+  # Microservicio de Clientes
+  microclientes:
+    build:
+      context: ./microclientes/microclientes
+      dockerfile: Dockerfile
+    container_name: microclientes
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+      - postgres-clientes
+    networks:
+      - microservices-network
+
+  # Microservicio de Cuentas
+  microcuentas:
+    build:
+      context: ./microcuentas/microcuentas
+      dockerfile: Dockerfile
+    container_name: microcuentas
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+      - postgres-cuentas
+    networks:
+      - microservices-network
+
+  # API Gateway
+  gateway:
+    build:
+      context: ./gateway/gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+      - microclientes
+      - microcuentas
+    networks:
+      - microservices-network
+
+volumes:
+  postgres_clientes_data:
+  postgres_cuentas_data:
+
+networks:
+  microservices-network:
+    driver: bridge 
