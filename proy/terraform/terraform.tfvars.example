@@ -1,0 +1,35 @@
+# Archivo de ejemplo para las variables de Terraform
+# Copia este archivo como terraform.tfvars y personaliza los valores
+
+# Configuración básica
+resource_group_name = "rg-microservicios"
+location            = "East US"
+cluster_name        = "aks-microservicios"
+
+# Configuración del cluster AKS
+node_count          = 2
+vm_size             = "Standard_D2s_v3"
+kubernetes_version  = "1.28.0"
+
+# Configuración de PostgreSQL
+postgres_sku                    = "B_Gen5_1"
+postgres_storage_mb             = 5120
+postgres_backup_retention_days  = 7
+
+# Configuración del ambiente
+environment  = "Production"
+project_name = "Microservicios"
+
+# Configuración de red
+enable_auto_scaling    = false
+enable_network_policy  = true
+network_plugin         = "azure"
+
+# Tags personalizados
+tags = {
+  Environment = "Production"
+  Project     = "Microservicios"
+  ManagedBy   = "Terraform"
+  Owner       = "DevOps Team"
+  CostCenter  = "IT-001"
+} 

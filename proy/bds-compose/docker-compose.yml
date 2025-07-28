@@ -1,0 +1,40 @@
+
+version: "3.9"
+
+services:
+  postgres-clientes:
+    image: postgres:15
+    container_name: postgres-clientes
+    restart: always
+    environment:
+      POSTGRES_DB: microclientesdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init/microclientes:/docker-entrypoint-initdb.d
+    networks:
+      - microservicios_net
+
+  postgres-cuentas:
+    image: postgres:15
+    container_name: postgres-cuentas
+    restart: always
+    environment:
+      POSTGRES_DB: microcuentasdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init/microcuentas:/docker-entrypoint-initdb.d
+    networks:
+      - microservicios_net
+
+networks:
+  microservicios_net:
+
+volumes:
+  postgres_clientes_data:
+  postgres_cuentas_data:
