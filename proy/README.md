@@ -6,60 +6,64 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    API GATEWAY (8083)                       │
-│                    Punto de Entrada Único                   │
-│                    (Sin Base de Datos)                      │
+│                    API GATEWAY                              │
+│                   (Puerto 8083)                             │
 │                                                             │
+│ • Punto de Entrada Único                                   │
 │ • Ruteo de Requests                                        │
 │ • Filtros y Logging                                        │
 │ • Load Balancing                                           │
 │ • CORS y Seguridad                                         │
+│                                                             │
+│                    (SIN BASE DE DATOS)                      │
 └─────────────────────┬───────────────────────────────────────┘
                       │
                       ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    EUREKA SERVER                            │
-│                   (Puerto 8761)                             │
-│                                                             │
-│ • Service Discovery                                         │
-│ • Health Monitoring                                         │
-│ • Dashboard de monitoreo                                    │
-│ • Auto-registration de servicios                            │
-│ • (Sin Base de Datos - Memoria Interna)                     │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-        ┌─────────────┼
-        │             │             
-        ▼             ▼             
-┌─────────────┐ ┌─────────────┐ 
-│MICROCLIENTES│ │MICROCUENTAS │              
-│(Puerto 0*)  │ │(Puerto 0*)  │              
-│             │ │             │             
-│• Gestión    │ │• Gestión    │              
-│  Personas   │ │  Cuentas    │             
-│• Gestión    │ │• Movimientos│              
-│  Clientes   │ │• Reportes   │              
-│             │ │             │             
-│             │ │             │              
-└─────┬───────┘ └─────┬───────┘ 
-      │               │
-      │               │
-      │               │
-      ▼               ▼
-┌─────────────┐ ┌─────────────┐ 
-│ POSTGRESQL  │ │ POSTGRESQL  │ 
-│ CLIENTES    │ │  CUENTAS    │ 
-│(Puerto 5432)│ │(Puerto 5433)│ 
-│             │ │             │
-│ • Tabla     │ │ • Tabla     │
-│   persona   │ │   cuenta    │
-│ • Tabla     │ │ • Tabla     │
-│   cliente   │ │   movimiento│
-└─────────────┘ └─────────────┘ 
+        ┌─────────────┼─────────────┐
+        │             │             │
+        ▼             ▼             │
+┌─────────────┐ ┌─────────────┐     │
+│MICROCLIENTES│ │MICROCUENTAS │     │
+│(Puerto 0*)  │ │(Puerto 0*)  │     │
+│             │ │             │     │
+│• Gestión    │ │• Gestión    │     │
+│  Personas   │ │  Cuentas    │     │
+│• Gestión    │ │• Movimientos│     │
+│  Clientes   │ │• Reportes   │     │
+│             │ │             │     │
+└─────┬───────┘ └─────┬───────┘     │
+      │               │             │
+      │               │             │
+      │               │             │
+      ▼               ▼             │
+┌─────────────┐ ┌─────────────┐     │
+│ POSTGRESQL  │ │ POSTGRESQL  │     │
+│ CLIENTES    │ │  CUENTAS    │     │
+│(Puerto 5432)│ │(Puerto 5433)│     │
+│             │ │             │     │
+│ • Tabla     │ │ • Tabla     │     │
+│   persona   │ │   cuenta    │     │
+│ • Tabla     │ │ • Tabla     │     │
+│   cliente   │ │   movimiento│     │
+└─────────────┘ └─────────────┘     │
+                                    │
+                                    ▼
+                            ┌─────────────┐
+                            │   EUREKA    │
+                            │             │
+                            │ • Service   │
+                            │   Discovery │
+                            │ • Health    │
+                            │   Check     │
+                            │             │
+                            │(SIN BASE DE │
+                            │   DATOS)    │
+                            └─────────────┘
 
 * Puerto 0 = Puerto aleatorio para múltiples instancias
 * Cada microservicio tiene su propia base de datos independiente
-* Los microservicios se comunican entre sí (no las bases de datos)
+* Los microservicios se comunican entre sí vía REST APIs
+* Las bases de datos NO se comunican entre sí
 * API Gateway y Eureka Server NO tienen base de datos
 ```
 
@@ -113,6 +117,7 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Dashboard de monitoreo en `http://localhost:8761`
 - **No requiere base de datos** - usa memoria interna para registro
 - **Sin persistencia** - los datos se pierden al reiniciar
+- **Ubicación independiente** - no está conectado directamente a microservicios
 
 ### 🚪 **API Gateway (Puerto 8083)**
 - Punto de entrada único para todas las APIs
@@ -120,6 +125,7 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Filtros de logging y monitoreo
 - Balanceo de carga automático
 - **No tiene base de datos** - solo rutea requests
+- **Ubicación central** - recibe todas las peticiones y las distribuye
 
 ### 👥 **Microservicio: microclientes (Puerto 0*)**
 Gestiona la información de personas y clientes del banco.
@@ -300,6 +306,8 @@ CREATE INDEX idx_movimiento_numero_cuenta ON movimiento(numero_cuenta);
 - **microcuentas → microclientes**: Usa OpenFeign para obtener datos de clientes
 - **microclientes → microcuentas**: No hay comunicación directa (solo lectura de datos de clientes)
 - **Las bases de datos NO se comunican**: Cada una es completamente independiente
+- **Flujo de comunicación**: Cliente → API Gateway → Microservicio → Base de Datos
+- **Service Discovery**: Eureka mantiene registro de ubicaciones de microservicios
 
 ## 🔄 Flujo Completo a través del API Gateway
 
