@@ -8,6 +8,12 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 ┌─────────────────────────────────────────────────────────────┐
 │                    API GATEWAY (8083)                       │
 │                    Punto de Entrada Único                   │
+│                    (Sin Base de Datos)                      │
+│                                                             │
+│ • Ruteo de Requests                                        │
+│ • Filtros y Logging                                        │
+│ • Load Balancing                                           │
+│ • CORS y Seguridad                                         │
 └─────────────────────┬───────────────────────────────────────┘
                       │
                       ▼
@@ -17,36 +23,44 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 │                                                             │
 │ • Service Discovery                                         │
 │ • Health Monitoring                                         │
-│ • Load Balancing                                            │
 │ • Dashboard de monitoreo                                    │
-│ • Auto-registration de servicios                           │
+│ • Auto-registration de servicios                            │
+│ • (Sin Base de Datos - Memoria Interna)                     │
 └─────────────────────┬───────────────────────────────────────┘
-                      │
-        ┌─────────────┼─────────────┐
-        │             │             │
-        ▼             ▼             ▼
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│MICROCLIENTES│ │MICROCUENTAS │ │   GATEWAY   │
-│(Puerto 0*)  │ │(Puerto 0*)  │ │(Puerto 8083)│
-│             │ │             │ │             │
-│• Gestión    │ │• Gestión    │ │• Ruteo      │
-│  Personas   │ │  Cuentas    │ │• Filtros    │
-│• Gestión    │ │• Movimientos│ │• Load Bal.  │
-│  Clientes   │ │• Reportes   │ │• CORS       │
-└─────────────┘ └─────────────┘ └─────────────┘
-        │             │             |
-        └─────────────┼─────────────┘
                       │
         ┌─────────────┼
         │             │             
         ▼             ▼             
 ┌─────────────┐ ┌─────────────┐ 
+│MICROCLIENTES│ │MICROCUENTAS │              
+│(Puerto 0*)  │ │(Puerto 0*)  │              
+│             │ │             │             
+│• Gestión    │ │• Gestión    │              
+│  Personas   │ │  Cuentas    │             
+│• Gestión    │ │• Movimientos│              
+│  Clientes   │ │• Reportes   │              
+│             │ │             │             
+│             │ │             │              
+└─────┬───────┘ └─────┬───────┘ 
+      │               │
+      │               │
+      │               │
+      ▼               ▼
+┌─────────────┐ ┌─────────────┐ 
 │ POSTGRESQL  │ │ POSTGRESQL  │ 
 │ CLIENTES    │ │  CUENTAS    │ 
 │(Puerto 5432)│ │(Puerto 5433)│ 
+│             │ │             │
+│ • Tabla     │ │ • Tabla     │
+│   persona   │ │   cuenta    │
+│ • Tabla     │ │ • Tabla     │
+│   cliente   │ │   movimiento│
 └─────────────┘ └─────────────┘ 
 
 * Puerto 0 = Puerto aleatorio para múltiples instancias
+* Cada microservicio tiene su propia base de datos independiente
+* Los microservicios se comunican entre sí (no las bases de datos)
+* API Gateway y Eureka Server NO tienen base de datos
 ```
 
 ### **Arquitectura de Despliegue Cloud (Azure AKS)**
@@ -63,12 +77,14 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 │ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐                │
 │ │   API GATEWAY   │ │  EUREKA SERVER  │ │  LOAD BALANCER  │                │
 │ │   (Puerto 8083) │ │  (Puerto 8761)  │ │   (Azure LB)    │                │
+│ │ (Sin BD)        │ │ (Sin BD)        │ │                 │                │
 │ └─────────────────┘ └─────────────────┘ └─────────────────┘                │
 │                                                                             │
 │ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐                │
 │ │ MICROCLIENTES   │ │ MICROCUENTAS    │ │   NAMESPACE     │                │
 │ │ (2 Replicas)    │ │ (2 Replicas)    │ │ microservicios  │                │
 │ │ (Puertos 0*)    │ │ (Puertos 0*)    │ │                 │                │
+│ │ + BD Clientes   │ │ + BD Cuentas    │ │                 │                │
 │ └─────────────────┘ └─────────────────┘ └─────────────────┘                │
 └─────────────────────┬───────────────────────────────────────────────────────┘
                       │
@@ -79,9 +95,14 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 │ AZURE       │ │ AZURE       │ │ AZURE       │
 │ POSTGRESQL  │ │ POSTGRESQL  │ │ CONTAINER   │
 │ CLIENTES    │ │ CUENTAS     │ │ REGISTRY    │
+│ (BD         │ │ (BD         │ │             │
+│  Independiente)│  Independiente)│             │
 └─────────────┘ └─────────────┘ └─────────────┘
 
 * Puerto 0 = Puerto aleatorio asignado por Kubernetes
+* Cada microservicio tiene su propia base de datos independiente
+* Los microservicios se comunican entre sí vía REST APIs
+* API Gateway y Eureka Server NO tienen base de datos
 ```
 
 ## 📋 Componentes del Sistema
@@ -91,24 +112,30 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Registro y descubrimiento automático de servicios
 - Dashboard de monitoreo en `http://localhost:8761`
 - **No requiere base de datos** - usa memoria interna para registro
+- **Sin persistencia** - los datos se pierden al reiniciar
 
 ### 🚪 **API Gateway (Puerto 8083)**
 - Punto de entrada único para todas las APIs
 - Enrutamiento inteligente a microservicios
 - Filtros de logging y monitoreo
 - Balanceo de carga automático
+- **No tiene base de datos** - solo rutea requests
 
 ### 👥 **Microservicio: microclientes (Puerto 0*)**
 Gestiona la información de personas y clientes del banco.
 - **Puerto aleatorio** para permitir múltiples instancias
 - Se registra automáticamente en Eureka
 - Descubierto dinámicamente por el Gateway
+- **Tiene su propia base de datos** PostgreSQL independiente
+- **Se comunica con microcuentas** vía REST APIs cuando es necesario
 
 ### 💰 **Microservicio: microcuentas (Puerto 0*)**
 Maneja la gestión de cuentas bancarias, movimientos y reportes financieros.
 - **Puerto aleatorio** para permitir múltiples instancias
 - Se registra automáticamente en Eureka
 - Descubierto dinámicamente por el Gateway
+- **Tiene su propia base de datos** PostgreSQL independiente
+- **Se comunica con microclientes** vía OpenFeign para obtener datos de clientes
 
 ## 🚀 Opciones de Despliegue
 
@@ -219,8 +246,12 @@ run-multiple-instances.bat
 
 ## 🔧 Configuración de Bases de Datos
 
-### Base de Datos para microclientes
+### **Principio de Base de Datos por Servicio**
+Cada microservicio tiene su propia base de datos independiente. Las bases de datos **NO se comunican entre sí** - solo los microservicios se comunican vía APIs REST.
+
+### Base de Datos para microclientes (PostgreSQL - Puerto 5432)
 ```sql
+-- Base de datos independiente para gestión de clientes
 CREATE TABLE persona (
     identificacion VARCHAR(20) PRIMARY KEY,
     nombre VARCHAR(100),
@@ -239,8 +270,9 @@ CREATE TABLE cliente (
 );
 ```
 
-### Base de Datos para microcuentas
+### Base de Datos para microcuentas (PostgreSQL - Puerto 5433)
 ```sql
+-- Base de datos independiente para gestión de cuentas
 CREATE TABLE cuenta (
     numero_cuenta VARCHAR(20) PRIMARY KEY,
     tipo_cuenta VARCHAR(20) NOT NULL,
@@ -263,6 +295,11 @@ CREATE TABLE movimiento (
 CREATE INDEX idx_movimiento_fecha ON movimiento(fecha);
 CREATE INDEX idx_movimiento_numero_cuenta ON movimiento(numero_cuenta);
 ```
+
+### **Comunicación entre Microservicios**
+- **microcuentas → microclientes**: Usa OpenFeign para obtener datos de clientes
+- **microclientes → microcuentas**: No hay comunicación directa (solo lectura de datos de clientes)
+- **Las bases de datos NO se comunican**: Cada una es completamente independiente
 
 ## 🔄 Flujo Completo a través del API Gateway
 
@@ -716,6 +753,160 @@ kubectl port-forward svc/gateway 8083:8083 -n microservicios
 - `/actuator/metrics` - Métricas del sistema
 - `/actuator/info` - Información de la aplicación
 - `/actuator/env` - Variables de entorno
+
+## 📝 Sistema de Logging
+
+### **Configuración de Logs por Servicio**
+
+Cada servicio tiene configurado un sistema de logging avanzado que incluye:
+
+#### **1. Eureka Server**
+- **Archivos de log:** `logs/eureka-server-*.log`
+- **Logs informativos:** `eureka-server-info.log`
+- **Logs de error:** `eureka-server-error.log`
+- **Logs de debug:** `eureka-server-debug.log`
+- **Archivo de configuración:** `logback-spring.xml`
+
+#### **2. API Gateway**
+- **Archivos de log:** `logs/gateway-*.log`
+- **Logs informativos:** `gateway-info.log`
+- **Logs de error:** `gateway-error.log`
+- **Logs de debug:** `gateway-debug.log`
+- **Archivo de configuración:** `logback-spring.xml`
+
+#### **3. Microservicio de Clientes**
+- **Archivos de log:** `logs/microclientes-*.log`
+- **Logs informativos:** `microclientes-info.log`
+- **Logs de error:** `microclientes-error.log`
+- **Logs de debug:** `microclientes-debug.log`
+- **Logs SQL:** `microclientes-sql.log`
+- **Archivo de configuración:** `logback-spring.xml`
+
+#### **4. Microservicio de Cuentas**
+- **Archivos de log:** `logs/microcuentas-*.log`
+- **Logs informativos:** `microcuentas-info.log`
+- **Logs de error:** `microcuentas-error.log`
+- **Logs de debug:** `microcuentas-debug.log`
+- **Logs SQL:** `microcuentas-sql.log`
+- **Logs de Feign:** `microcuentas-feign.log`
+- **Archivo de configuración:** `logback-spring.xml`
+
+### **Características del Sistema de Logging**
+
+#### **Separación por Niveles**
+- **INFO:** Logs informativos de operaciones normales
+- **ERROR:** Logs de errores y excepciones
+- **DEBUG:** Logs detallados para desarrollo y troubleshooting
+- **SQL:** Logs específicos de consultas a base de datos
+- **FEIGN:** Logs de comunicación entre microservicios
+
+#### **Rotación Automática**
+- **Tamaño máximo:** 10MB por archivo
+- **Historial:** 30 días de logs
+- **Capacidad total:** 1GB por servicio
+- **Archivado:** Los logs antiguos se mueven a `logs/archive/`
+
+#### **Patrones de Log**
+```properties
+# Consola (formato simplificado)
+%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+
+# Archivo (formato completo)
+%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+```
+
+### **Comandos para Monitorear Logs**
+
+#### **Ver logs en tiempo real**
+```bash
+# Eureka Server
+tail -f logs/eureka-server-info.log
+tail -f logs/eureka-server-error.log
+
+# API Gateway
+tail -f logs/gateway-info.log
+tail -f logs/gateway-error.log
+
+# Microclientes
+tail -f logs/microclientes-info.log
+tail -f logs/microclientes-sql.log
+
+# Microcuentas
+tail -f logs/microcuentas-info.log
+tail -f logs/microcuentas-feign.log
+```
+
+#### **Buscar errores específicos**
+```bash
+# Buscar errores en todos los servicios
+grep -r "ERROR" logs/
+
+# Buscar errores de base de datos
+grep -r "SQLException" logs/
+
+# Buscar errores de comunicación
+grep -r "Connection refused" logs/
+```
+
+#### **Limpiar logs antiguos**
+```bash
+# Eliminar logs de más de 30 días
+find logs/ -name "*.log" -mtime +30 -delete
+find logs/archive/ -name "*.log" -mtime +30 -delete
+```
+
+### **Scripts de Monitoreo Automatizado**
+
+#### **Script Bash (Linux/Mac)**
+```bash
+# Dar permisos de ejecución
+chmod +x monitor-logs.sh
+
+# Ver logs informativos de un servicio
+./monitor-logs.sh eureka info
+./monitor-logs.sh clientes error
+./monitor-logs.sh cuentas sql
+
+# Ver logs de todos los servicios
+./monitor-logs.sh all info
+
+# Comandos especiales
+./monitor-logs.sh search    # Buscar errores
+./monitor-logs.sh clean     # Limpiar logs antiguos
+./monitor-logs.sh stats     # Estadísticas de logs
+```
+
+#### **Script PowerShell (Windows)**
+```powershell
+# Ver logs informativos de un servicio
+.\monitor-logs.ps1 eureka info
+.\monitor-logs.ps1 clientes error
+.\monitor-logs.ps1 cuentas sql
+
+# Ver logs de todos los servicios
+.\monitor-logs.ps1 all info
+
+# Comandos especiales
+.\monitor-logs.ps1 search    # Buscar errores
+.\monitor-logs.ps1 clean     # Limpiar logs antiguos
+.\monitor-logs.ps1 stats     # Estadísticas de logs
+```
+
+### **Configuración en Docker**
+
+Los logs también están disponibles dentro de los contenedores Docker:
+
+```bash
+# Ver logs de un contenedor específico
+docker-compose logs -f eureka-server
+docker-compose logs -f gateway
+docker-compose logs -f microclientes
+docker-compose logs -f microcuentas
+
+# Acceder a los archivos de log dentro del contenedor
+docker exec -it <container_name> ls -la logs/
+docker exec -it <container_name> tail -f logs/microclientes-info.log
+```
 
 ## 🚀 Próximos Pasos y Mejoras
 

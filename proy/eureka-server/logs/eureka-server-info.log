@@ -1,0 +1,84 @@
+2025-07-28 20:48:48.317 [restartedMain] INFO  c.p.e.EurekaServerApplication - Starting EurekaServerApplication using Java 21.0.3 with PID 28492 (C:\Users\Usuario\Downloads\Proyectro_Java-main\Proyectro_Java-main2\Proyectro_Java-main\proy-main\proy\eureka-server\target\classes started by Usuario in C:\Users\Usuario\Downloads\Proyectro_Java-main\Proyectro_Java-main2\Proyectro_Java-main\proy-main\proy\eureka-server)
+2025-07-28 20:48:48.324 [restartedMain] INFO  c.p.e.EurekaServerApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-28 20:48:48.476 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-07-28 20:48:48.480 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-07-28 20:48:51.238 [restartedMain] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=b8babe63-eb03-3dd9-9e9b-369790113fa7
+2025-07-28 20:48:52.388 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8761 (http)
+2025-07-28 20:48:52.410 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8761"]
+2025-07-28 20:48:52.423 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-28 20:48:52.423 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-07-28 20:48:52.569 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-28 20:48:52.569 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4088 ms
+2025-07-28 20:48:54.010 [restartedMain] INFO  c.n.d.p.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2025-07-28 20:48:54.012 [restartedMain] INFO  c.n.d.p.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2025-07-28 20:48:54.307 [restartedMain] INFO  c.n.d.p.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2025-07-28 20:48:54.307 [restartedMain] INFO  c.n.d.p.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2025-07-28 20:48:55.973 [restartedMain] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-07-28 20:48:56.250 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-28 20:48:57.352 [restartedMain] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-07-28 20:48:57.565 [restartedMain] INFO  o.s.c.n.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2025-07-28 20:48:57.594 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2025-07-28 20:48:57.595 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Client configured to neither register nor query for data.
+2025-07-28 20:48:57.597 [restartedMain] INFO  c.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1753753737596 with initial instances count: 0
+2025-07-28 20:48:57.668 [restartedMain] INFO  c.n.e.DefaultEurekaServerContext - Initializing ...
+2025-07-28 20:48:57.693 [restartedMain] INFO  c.n.e.r.AbstractInstanceRegistry - Finished initializing remote region registries. All known remote regions: []
+2025-07-28 20:48:57.695 [restartedMain] INFO  c.n.e.DefaultEurekaServerContext - Initialized
+2025-07-28 20:48:57.711 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2025-07-28 20:48:57.816 [restartedMain] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Registering application EUREKA-SERVER with eureka with status UP
+2025-07-28 20:48:57.818 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8761"]
+2025-07-28 20:48:57.843 [Thread-16] INFO  o.s.c.n.e.s.EurekaServerBootstrap - isAws returned false
+2025-07-28 20:48:57.844 [Thread-16] INFO  o.s.c.n.e.s.EurekaServerBootstrap - Initialized server context
+2025-07-28 20:48:57.844 [Thread-16] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Got 1 instances from neighboring DS node
+2025-07-28 20:48:57.844 [Thread-16] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Renew threshold is: 1
+2025-07-28 20:48:57.845 [Thread-16] INFO  c.n.e.r.PeerAwareInstanceRegistryImpl - Changing status to UP
+2025-07-28 20:48:57.849 [Thread-16] INFO  o.s.c.n.e.s.EurekaServerInitializerConfiguration - Started Eureka Server
+2025-07-28 20:48:57.874 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8761 (http) with context path ''
+2025-07-28 20:48:57.876 [restartedMain] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8761
+2025-07-28 20:48:58.847 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:48:58.894 [restartedMain] INFO  o.s.cloud.commons.util.InetUtils - Cannot determine local hostname
+2025-07-28 20:48:58.917 [restartedMain] INFO  c.p.e.EurekaServerApplication - Started EurekaServerApplication in 12.775 seconds (process running for 13.909)
+2025-07-28 20:48:59.847 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:00.847 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:01.848 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:02.848 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:03.848 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:04.853 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-07-28 20:49:05.854 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-07-28 20:49:06.854 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:07.855 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:08.855 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:09.856 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:10.857 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-07-28 20:49:11.857 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:12.858 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-07-28 20:49:13.861 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-07-28 20:49:14.860 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:15.861 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:16.862 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:17.863 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:18.863 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:19.863 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:20.864 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 1ms
+2025-07-28 20:49:21.865 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:22.865 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:23.866 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:24.867 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:25.867 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:26.867 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:27.867 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:28.868 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:29.869 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:30.869 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:31.870 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:32.874 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 4ms
+2025-07-28 20:49:33.874 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:34.875 [Eureka-EvictionTimer] INFO  c.n.e.r.AbstractInstanceRegistry - Running the evict task with compensationTime 0ms
+2025-07-28 20:49:35.166 [SpringApplicationShutdownHook] INFO  o.s.c.n.e.s.EurekaServiceRegistry - Unregistering application EUREKA-SERVER with eureka with status DOWN
+2025-07-28 20:49:35.184 [SpringApplicationShutdownHook] INFO  o.s.c.n.e.s.EurekaServerBootstrap - Shutting down Eureka Server..
+2025-07-28 20:49:35.184 [SpringApplicationShutdownHook] INFO  c.n.e.DefaultEurekaServerContext - Shutting down ...
+2025-07-28 20:49:35.184 [SpringApplicationShutdownHook] INFO  c.n.e.DefaultEurekaServerContext - Shut down
+2025-07-28 20:49:35.185 [SpringApplicationShutdownHook] INFO  o.s.c.n.e.s.EurekaServerBootstrap - Eureka Service is now shutdown...
+2025-07-28 20:49:35.186 [SpringApplicationShutdownHook] INFO  c.n.e.DefaultEurekaServerContext - Shutting down ...
+2025-07-28 20:49:35.186 [SpringApplicationShutdownHook] INFO  c.n.e.DefaultEurekaServerContext - Shut down
+2025-07-28 20:49:35.194 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - Shutting down DiscoveryClient ...
+2025-07-28 20:49:35.194 [SpringApplicationShutdownHook] INFO  c.netflix.discovery.DiscoveryClient - Completed shut down of DiscoveryClient

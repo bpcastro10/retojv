@@ -1,0 +1,28 @@
+2025-07-28 20:49:57.623 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-07-28 20:50:01.040 [restartedMain] DEBUG o.s.c.g.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='clientes-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/clientes/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microclientes, order=0, metadata={}}, RouteDefinition{id='cuentas-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/cuentas/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microcuentas, order=0, metadata={}}, RouteDefinition{id='movimientos-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/movimientos/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microcuentas, order=0, metadata={}}, RouteDefinition{id='reportes-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/reportes/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microcuentas, order=0, metadata={}}]
+2025-07-28 20:50:08.621 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying {_genkey_0=/api/v1/clientes/**} to Path
+2025-07-28 20:50:08.671 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:08.682 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: clientes-service
+2025-07-28 20:50:08.687 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying {_genkey_0=/api/v1/cuentas/**} to Path
+2025-07-28 20:50:08.701 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:08.706 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: cuentas-service
+2025-07-28 20:50:08.719 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying {_genkey_0=/api/v1/movimientos/**} to Path
+2025-07-28 20:50:08.723 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:08.739 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: movimientos-service
+2025-07-28 20:50:08.747 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying {_genkey_0=/api/v1/reportes/**} to Path
+2025-07-28 20:50:08.769 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:08.791 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: reportes-service
+2025-07-28 20:50:08.859 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 4
+2025-07-28 20:50:11.331 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying {_genkey_0=/api/v1/clientes/**} to Path
+2025-07-28 20:50:11.335 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:11.340 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: clientes-service
+2025-07-28 20:50:11.340 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying {_genkey_0=/api/v1/cuentas/**} to Path
+2025-07-28 20:50:11.350 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:11.354 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: cuentas-service
+2025-07-28 20:50:11.356 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying {_genkey_0=/api/v1/movimientos/**} to Path
+2025-07-28 20:50:11.356 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:11.359 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: movimientos-service
+2025-07-28 20:50:11.359 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying {_genkey_0=/api/v1/reportes/**} to Path
+2025-07-28 20:50:11.361 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying filter {_genkey_0=1} to StripPrefix
+2025-07-28 20:50:11.369 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: reportes-service
+2025-07-28 20:50:11.369 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 4

@@ -1,0 +1,43 @@
+2025-07-28 20:48:48.322 [restartedMain] DEBUG c.p.e.EurekaServerApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-07-28 20:48:53.371 [restartedMain] DEBUG o.s.c.n.e.s.EurekaServerAutoConfiguration$1 - Filter 'eurekaVersionFilterRegistration' configured for use
+2025-07-28 20:48:55.977 [restartedMain] DEBUG o.s.c.n.e.m.DefaultManagementMetadataProvider - Constructed eureka meta-data healthcheckUrl: http://localhost:8761/actuator/health
+2025-07-28 20:48:55.977 [restartedMain] DEBUG o.s.c.n.e.m.DefaultManagementMetadataProvider - Constructed eureka meta-data statusPageUrl: http://localhost:8761/actuator/info
+2025-07-28 20:48:58.847 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:48:59.847 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:00.000 [Eureka-CacheFillTimer] DEBUG c.n.e.registry.ResponseCacheImpl - Updating the client cache from response cache
+2025-07-28 20:49:00.848 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:01.848 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:02.848 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:03.849 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:04.855 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:05.854 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:06.854 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:07.861 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:08.855 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:09.856 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:10.858 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:11.857 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:12.859 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:13.863 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:14.860 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:15.861 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:16.862 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:17.863 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:18.863 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:19.864 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:20.864 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:21.865 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:22.865 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:23.867 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:24.867 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:25.867 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:26.867 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:27.868 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:28.870 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:29.869 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:30.000 [Eureka-CacheFillTimer] DEBUG c.n.e.registry.ResponseCacheImpl - Updating the client cache from response cache
+2025-07-28 20:49:30.869 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:31.870 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:32.875 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:33.874 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
+2025-07-28 20:49:34.876 [Eureka-EvictionTimer] DEBUG c.n.e.r.AbstractInstanceRegistry - Running the evict task
