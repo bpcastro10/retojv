@@ -1,0 +1,9 @@
+2025-07-30 13:26:49.496 [restartedMain] DEBUG org.hibernate.SQL - 
+    alter table if exists cuenta 
+       alter column saldo_inicial set data type numeric(19,2)
+2025-07-30 13:26:49.590 [restartedMain] DEBUG org.hibernate.SQL - 
+    alter table if exists movimiento 
+       alter column saldo set data type numeric(19,2)
+2025-07-30 13:26:49.624 [restartedMain] DEBUG org.hibernate.SQL - 
+    alter table if exists movimiento 
+       alter column valor set data type numeric(19,2)

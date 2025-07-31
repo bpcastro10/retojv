@@ -1,0 +1,7 @@
+2025-07-30 17:48:45.594 [restartedMain] DEBUG org.hibernate.SQL - create table persona_cliente (clienteid varchar(255) not null, contrasena varchar(255), direccion varchar(255), edad integer, estado varchar(255), genero varchar(255), identificacion varchar(255), nombre varchar(255), telefono varchar(255), primary key (clienteid))
+2025-07-30 18:03:19.848 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column clienteid set data type varchar(20)
+2025-07-30 18:03:19.898 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column contrasena set data type varchar(100)
+2025-07-30 18:03:19.935 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column direccion set data type varchar(100)
+2025-07-30 18:03:19.980 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column identificacion set data type varchar(20)
+2025-07-30 18:03:20.021 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column nombre set data type varchar(100)
+2025-07-30 18:03:20.061 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column telefono set data type varchar(20)
