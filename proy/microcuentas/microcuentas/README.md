@@ -1,436 +1,157 @@
 # Microservicio de Cuentas
 
-Este microservicio maneja la gestión de cuentas bancarias, movimientos y reportes financieros.
+## Descripción
+Microservicio para la gestión de cuentas bancarias y movimientos financieros, implementado con Spring Boot 3.2.3 y Java 17.
 
-## Requisitos Previos
-- Microservicio de Clientes corriendo en el puerto 8082
+## Características Implementadas
 
-## Configuración del Entorno
+### ✅ Refactorización Completa con Lombok
+- **Entidades**: Uso de anotaciones Lombok (`@Data`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`)
+- **DTOs**: Implementación de Lombok con validaciones Bean Validation
+- **Servicios**: Eliminación de `@Autowired` usando inyección por constructor con `@RequiredArgsConstructor`
+- **Controladores**: Código limpio sin manejo manual de excepciones
 
-1. Configurar la base de datos PostgreSQL:
-   ```sql
-   -- Crear la base de datos
-   CREATE DATABASE microcuentas;
-   
-   -- Conectar a la base de datos
-   \c microcuentas;
-   
-   -- Crear tabla de cuentas
-   CREATE TABLE IF NOT EXISTS cuenta (
-       numero_cuenta VARCHAR(20) PRIMARY KEY,
-       tipo_cuenta VARCHAR(20) NOT NULL,
-       saldo_inicial DECIMAL(19,2) NOT NULL DEFAULT 0.00,
-       estado VARCHAR(20) NOT NULL,
-       fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-   
-   -- Crear tabla de movimientos
-   CREATE TABLE IF NOT EXISTS movimiento (
-       id BIGSERIAL PRIMARY KEY,
-       fecha TIMESTAMP NOT NULL,
-       tipo_movimiento VARCHAR(20) NOT NULL,
-       valor DECIMAL(19,2) NOT NULL,
-       saldo DECIMAL(19,2) NOT NULL,
-       numero_cuenta VARCHAR(20) NOT NULL,
-       FOREIGN KEY (numero_cuenta) REFERENCES cuenta(numero_cuenta)
-   );
-   
-   -- Crear índices para mejorar el rendimiento
-   CREATE INDEX idx_movimiento_fecha ON movimiento(fecha);
-   CREATE INDEX idx_movimiento_numero_cuenta ON movimiento(numero_cuenta);
-   
-   -- Crear vista para reportes
-   CREATE OR REPLACE VIEW vista_estado_cuenta AS
-   SELECT 
-       c.numero_cuenta,
-       c.tipo_cuenta,
-       c.saldo_inicial,
-       c.estado,
-       m.fecha,
-       m.tipo_movimiento,
-       m.valor,
-       m.saldo
-   FROM cuenta c
-   LEFT JOIN movimiento m ON c.numero_cuenta = m.numero_cuenta;
-   
-   -- Insertar datos de prueba
-   INSERT INTO cuenta (numero_cuenta, tipo_cuenta, saldo_inicial, estado)
-   VALUES 
-       ('1234567890', 'AHORROS', 1000.00, 'ACTIVA'),
-       ('0987654321', 'CORRIENTE', 2000.00, 'ACTIVA')
-   ON CONFLICT (numero_cuenta) DO NOTHING;
-   ```
+### ✅ Relación One-to-Many Implementada
+- **Cuenta → Movimiento**: Relación bidireccional con `@OneToMany` y `@ManyToOne`
+- **Cascade**: Configuración de cascada para operaciones en cascada
+- **Lazy Loading**: Optimización de consultas con `FetchType.LAZY`
+- **Métodos Helper**: Métodos para gestión de la relación bidireccional
 
-2. Configurar las credenciales en `application.properties`:
-   ```properties
-   spring.datasource.username=postgres
-   spring.datasource.password=admin123
-   ```
+### ✅ Global Exception Handler Mejorado
+- **Manejo de Validaciones**: Captura automática de errores de validación Bean Validation
+- **Respuestas Estructuradas**: Clase `ErrorResponse` con timestamp, status, error y detalles
+- **Logging**: Integración con SLF4J para logging estructurado
+- **Tipos de Excepción**:
+  - `SaldoInsuficienteException`
+  - `IllegalArgumentException`
+  - `MethodArgumentNotValidException`
+  - Excepciones genéricas
 
+### ✅ Validaciones Bean Validation
+- **CuentaDTO**:
+  - `@NotBlank` para campos obligatorios
+  - `@Pattern` para validación de formato (número de cuenta, tipo de cuenta, estado)
+  - `@DecimalMin` para validación de saldo mínimo
+- **MovimientoDTO**:
+  - `@NotNull` para campos obligatorios
+  - `@Pattern` para tipo de movimiento
+  - `@DecimalMin` para validación de valores monetarios
+
+### ✅ Controladores Limpios
+- **Eliminación de Try-Catch**: Manejo centralizado de excepciones
+- **Tipado Fuerte**: Uso de tipos específicos en lugar de `ResponseEntity<?>`
+- **Validación Automática**: Uso de `@Valid` para validación automática
+- **Logging**: Logging estructurado en cada operación
+
+### ✅ Inyección de Dependencias Moderna
+- **Constructor Injection**: Uso de `@RequiredArgsConstructor` en lugar de `@Autowired`
+- **Dependencias Finales**: Campos marcados como `final` para inmutabilidad
+- **Mejor Testabilidad**: Facilita la creación de mocks en pruebas unitarias
+
+## Estructura del Proyecto
+
+```
+src/main/java/com/proyecto/microcuentas/
+├── entity/
+│   ├── Cuenta.java          # Entidad con relación One-to-Many
+│   └── Movimiento.java      # Entidad con relación Many-to-One
+├── dto/
+│   ├── CuentaDTO.java       # DTO con validaciones Bean Validation
+│   ├── MovimientoDTO.java   # DTO con validaciones Bean Validation
+│   └── ClienteDTO.java      # DTO para información de cliente
+├── controller/
+│   ├── CuentaController.java    # Controlador limpio sin try-catch
+│   ├── MovimientoController.java # Controlador con validaciones
+│   └── ReporteController.java    # Controlador de reportes
+├── service/
+│   ├── CuentaService.java       # Servicio con inyección por constructor
+│   └── MovimientoService.java   # Servicio con logging
+├── exception/
+│   ├── GlobalExceptionHandler.java  # Handler centralizado
+│   ├── ErrorResponse.java           # Respuesta de error estructurada
+│   └── SaldoInsuficienteException.java
+└── config/
+    ├── ModelMapperConfig.java      # Configuración de mapeo
+    ├── CorsConfig.java             # Configuración CORS
+    └── FeignRequestInterceptor.java # Interceptor para Feign
+```
+
+## Tecnologías Utilizadas
+
+- **Spring Boot 3.2.3**
+- **Java 17**
+- **Spring Data JPA**
+- **PostgreSQL**
+- **Lombok**
+- **ModelMapper**
+- **Bean Validation**
+- **Spring Cloud OpenFeign**
+- **Eureka Client**
 
 ## Endpoints Disponibles
 
-Base URL: `http://localhost:8081`
+### Cuentas
+- `POST /cuentas` - Crear cuenta
+- `PUT /cuentas/{numeroCuenta}` - Actualizar cuenta
+- `DELETE /cuentas/{numeroCuenta}` - Eliminar cuenta
+- `GET /cuentas/{numeroCuenta}` - Obtener cuenta
+- `GET /cuentas` - Listar todas las cuentas
 
-### Cuentas (`/cuentas`)
+### Movimientos
+- `POST /movimientos` - Crear movimiento
+- `GET /movimientos/{id}` - Obtener movimiento
+- `GET /movimientos` - Listar todos los movimientos
+- `GET /movimientos/cuenta/{numeroCuenta}` - Movimientos por cuenta
+- `GET /movimientos/reporte` - Reporte por fechas
 
-#### Listar todas las cuentas
+### Reportes
+- `GET /reportes/estado-cuenta/{numeroCuenta}` - Estado de cuenta
+- `GET /reportes/movimientos` - Reporte de movimientos por fechas
+
+## Validaciones Implementadas
+
+### Cuenta
+- Número de cuenta: 10 dígitos numéricos
+- Tipo de cuenta: AHORRO o CORRIENTE
+- Saldo inicial: Mayor a 0
+- Estado: ACTIVA o INACTIVA
+
+### Movimiento
+- Tipo de movimiento: DEBITO o CREDITO
+- Valor: Mayor a 0.01
+- Saldo: No negativo
+- Número de cuenta: 10 dígitos numéricos
+
+## Ejecución
+
 ```bash
-GET http://localhost:8081/cuentas
-```
-Respuesta:
-```json
-[
-    {
-        "numeroCuenta": "1234567890",
-        "tipoCuenta": "AHORROS",
-        "saldoInicial": 1000.00,
-        "estado": "ACTIVA",
-        "fechaCreacion": "2024-03-20T10:00:00",
-        "fechaActualizacion": "2024-03-20T10:00:00"
-    },
-    {
-        "numeroCuenta": "0987654321",
-        "tipoCuenta": "CORRIENTE",
-        "saldoInicial": 2000.00,
-        "estado": "ACTIVA",
-        "fechaCreacion": "2024-03-20T10:00:00",
-        "fechaActualizacion": "2024-03-20T10:00:00"
-    }
-]
+# Compilar el proyecto
+mvn clean compile
+
+# Ejecutar tests
+mvn test
+
+# Ejecutar la aplicación
+mvn spring-boot:run
 ```
 
-#### Obtener cuenta específica
+## Docker
+
 ```bash
-GET http://localhost:8081/cuentas/1234567890
-```
-Respuesta:
-```json
-{
-    "numeroCuenta": "1234567890",
-    "tipoCuenta": "AHORROS",
-    "saldoInicial": 1000.00,
-    "estado": "ACTIVA",
-    "fechaCreacion": "2024-03-20T10:00:00",
-    "fechaActualizacion": "2024-03-20T10:00:00"
-}
+# Construir imagen
+docker build -t microcuentas .
+
+# Ejecutar contenedor
+docker run -p 8080:8080 microcuentas
 ```
 
-#### Crear nueva cuenta
-```bash
-POST http://localhost:8081/cuentas
-Content-Type: application/json
+## Beneficios de la Refactorización
 
-{
-    "numeroCuenta": "9876543210",
-    "tipoCuenta": "AHORROS",
-    "saldoInicial": 500.00,
-    "estado": "ACTIVA"
-}
-```
-Respuesta:
-```json
-{
-    "numeroCuenta": "9876543210",
-    "tipoCuenta": "AHORROS",
-    "saldoInicial": 500.00,
-    "estado": "ACTIVA",
-    "fechaCreacion": "2024-03-20T10:00:00",
-    "fechaActualizacion": "2024-03-20T10:00:00"
-}
-```
-
-#### Actualizar cuenta
-```bash
-PUT http://localhost:8081/cuentas/1234567890
-Content-Type: application/json
-
-{
-    "tipoCuenta": "CORRIENTE",
-    "saldoInicial": 1500.00,
-    "estado": "ACTIVA"
-}
-```
-Respuesta:
-```json
-{
-    "numeroCuenta": "1234567890",
-    "tipoCuenta": "CORRIENTE",
-    "saldoInicial": 1500.00,
-    "estado": "ACTIVA",
-    "fechaCreacion": "2024-03-20T10:00:00",
-    "fechaActualizacion": "2024-03-20T10:00:00"
-}
-```
-
-#### Eliminar cuenta
-```bash
-DELETE http://localhost:8081/cuentas/1234567890
-```
-Respuesta:
-```json
-{
-    "mensaje": "Cuenta eliminada exitosamente"
-}
-```
-
-### Movimientos (`/movimientos`)
-
-#### Listar todos los movimientos
-```bash
-GET http://localhost:8081/movimientos
-```
-Respuesta:
-```json
-[
-    {
-        "id": 1,
-        "fecha": "2024-03-20T10:00:00",
-        "tipoMovimiento": "DEPOSITO",
-        "valor": 500.00,
-        "saldo": 1500.00,
-        "numeroCuenta": "1234567890",
-        "cliente": {
-            "id": 1,
-            "nombre": "Juan Pérez",
-            "identificacion": "1234567890"
-        }
-    },
-    {
-        "id": 2,
-        "fecha": "2024-03-20T11:00:00",
-        "tipoMovimiento": "RETIRO",
-        "valor": 200.00,
-        "saldo": 1300.00,
-        "numeroCuenta": "1234567890",
-        "cliente": {
-            "id": 1,
-            "nombre": "Juan Pérez",
-            "identificacion": "1234567890"
-        }
-    }
-]
-```
-
-#### Obtener movimiento específico
-```bash
-GET http://localhost:8081/movimientos/1
-```
-Respuesta:
-```json
-{
-    "id": 1,
-    "fecha": "2024-03-20T10:00:00",
-    "tipoMovimiento": "DEPOSITO",
-    "valor": 500.00,
-    "saldo": 1500.00,
-    "numeroCuenta": "1234567890",
-    "cliente": {
-        "id": 1,
-        "nombre": "Juan Pérez",
-        "identificacion": "1234567890"
-    }
-}
-```
-
-#### Registrar nuevo movimiento
-```bash
-POST http://localhost:8081/movimientos
-Content-Type: application/json
-
-{
-    "tipoMovimiento": "DEPOSITO",
-    "valor": 500.00,
-    "numeroCuenta": "1234567890",
-    "fecha": "2024-03-20T10:00:00"
-}
-```
-Respuesta:
-```json
-{
-    "id": 3,
-    "fecha": "2024-03-20T12:00:00",
-    "tipoMovimiento": "DEPOSITO",
-    "valor": 500.00,
-    "saldo": 1800.00,
-    "numeroCuenta": "1234567890",
-    "cliente": {
-        "id": 1,
-        "nombre": "Juan Pérez",
-        "identificacion": "1234567890",
-        "direccion": "Calle Principal 123",
-        "telefono": "555-0123",
-        "estado": true
-    }
-}
-```
-
-#### Actualizar movimiento
-```bash
-PUT http://localhost:8081/movimientos/1
-Content-Type: application/json
-
-{
-    "tipoMovimiento": "DEPOSITO",
-    "valor": 1000.00,
-    "numeroCuenta": "1234567890"
-}
-```
-Respuesta:
-```json
-{
-    "id": 1,
-    "fecha": "2024-03-20T10:00:00",
-    "tipoMovimiento": "DEPOSITO",
-    "valor": 1000.00,
-    "saldo": 2000.00,
-    "numeroCuenta": "1234567890",
-    "cliente": {
-        "id": 1,
-        "nombre": "Juan Pérez",
-        "identificacion": "1234567890"
-    }
-}
-```
-
-#### Eliminar movimiento
-```bash
-DELETE http://localhost:8081/movimientos/1
-```
-Respuesta:
-```json
-{
-    "mensaje": "Movimiento eliminado exitosamente"
-}
-```
-
-### Reportes (`/reportes`)
-
-#### Estado de cuenta
-```bash
-GET http://localhost:8081/reportes/estado-cuenta/1234567890
-```
-Respuesta:
-```json
-{
-    "cuenta": {
-        "numeroCuenta": "1234567890",
-        "tipoCuenta": "AHORROS",
-        "saldoInicial": 1000.00,
-        "estado": "ACTIVA",
-        "fechaCreacion": "2024-03-20T10:00:00",
-        "fechaActualizacion": "2024-03-20T10:00:00"
-    },
-    "cliente": {
-        "id": 1,
-        "nombre": "Juan Pérez",
-        "identificacion": "1234567890",
-        "direccion": "Calle Principal 123",
-        "telefono": "555-0123",
-        "estado": true
-    },
-    "movimientos": [
-        {
-            "id": 1,
-            "fecha": "2024-03-20T10:00:00",
-            "tipoMovimiento": "DEPOSITO",
-            "valor": 500.00,
-            "saldo": 1500.00
-        },
-        {
-            "id": 2,
-            "fecha": "2024-03-20T11:00:00",
-            "tipoMovimiento": "RETIRO",
-            "valor": 200.00,
-            "saldo": 1300.00
-        }
-    ]
-}
-```
-
-#### Reporte de movimientos por fecha
-```bash
-GET http://localhost:8081/reportes/movimientos?fechaInicio=2024-03-01T00:00:00&fechaFin=2024-03-31T23:59:59
-```
-Respuesta:
-```json
-[
-    {
-        "id": 1,
-        "fecha": "2024-03-20T10:00:00",
-        "tipoMovimiento": "DEPOSITO",
-        "valor": 500.00,
-        "saldo": 1500.00,
-        "numeroCuenta": "1234567890",
-        "cliente": {
-            "id": 1,
-            "nombre": "Juan Pérez",
-            "identificacion": "1234567890",
-            "direccion": "Calle Principal 123",
-            "telefono": "555-0123",
-            "estado": true
-        }
-    },
-    {
-        "id": 2,
-        "fecha": "2024-03-20T11:00:00",
-        "tipoMovimiento": "RETIRO",
-        "valor": 200.00,
-        "saldo": 1300.00,
-        "numeroCuenta": "1234567890",
-        "cliente": {
-            "id": 1,
-            "nombre": "Juan Pérez",
-            "identificacion": "1234567890",
-            "direccion": "Calle Principal 123",
-            "telefono": "555-0123",
-            "estado": true
-        }
-    }
-]
-```
-
-### Respuestas de Error
-
-#### Error de Validación
-```json
-{
-    "error": "Error de Validación",
-    "mensaje": "El saldo inicial no puede ser negativo"
-}
-```
-
-#### Error de Saldo Insuficiente
-```json
-{
-    "error": "Saldo Insuficiente",
-    "mensaje": "No hay fondos suficientes para realizar la operación"
-}
-```
-
-#### Error de Recurso No Encontrado
-```json
-{
-    "error": "Recurso No Encontrado",
-    "mensaje": "La cuenta con número 1234567890 no existe"
-}
-```
-
-#### Error del Sistema
-```json
-{
-    "error": "Error del Sistema",
-    "mensaje": "Ha ocurrido un error inesperado"
-}
-```
-
-## Integración con Microservicio de Clientes
-
-El microservicio se integra con el microservicio de clientes mediante Feign Client:
-
-- `ClienteClient`: Interface para comunicación con el microservicio de clientes
-- Endpoints disponibles:
-  - `GET http://localhost:8082/clientes/{id}`: Obtiene información de un cliente por ID
-  - `GET http://localhost:8082/clientes/cuenta/{numeroCuenta}`: Obtiene información de un cliente por número de cuenta
+1. **Código más Limpio**: Eliminación de boilerplate con Lombok
+2. **Mejor Mantenibilidad**: Estructura clara y consistente
+3. **Validaciones Robustas**: Validación automática de datos de entrada
+4. **Manejo de Errores Centralizado**: Respuestas de error consistentes
+5. **Mejor Testabilidad**: Inyección por constructor facilita las pruebas
+6. **Logging Estructurado**: Trazabilidad completa de operaciones
+7. **Relaciones JPA Optimizadas**: Uso correcto de relaciones One-to-Many
 

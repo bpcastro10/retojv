@@ -1,0 +1,331 @@
+2025-08-06 10:33:25.242 [restartedMain] DEBUG org.hibernate.SQL - 
+    alter table if exists cuenta 
+       add column cliente_id varchar(255) not null
+2025-08-06 11:24:00.630 [http-nio-8081-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0
+2025-08-06 11:30:41.288 [http-nio-8081-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta,
+        m1_0.numero_cuenta,
+        m1_0.id,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        cuenta c1_0 
+    left join
+        movimiento m1_0 
+            on c1_0.numero_cuenta=m1_0.numero_cuenta 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:30:41.437 [http-nio-8081-exec-10] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        cuenta
+        (cliente_id, estado, fecha_actualizacion, fecha_creacion, saldo_inicial, tipo_cuenta, numero_cuenta) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2025-08-06 11:31:25.085 [http-nio-8081-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0
+2025-08-06 11:32:03.709 [http-nio-8081-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:32:12.364 [http-nio-8081-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:52:10.221 [http-nio-8081-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:52:10.257 [http-nio-8081-exec-7] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        movimiento
+        (numero_cuenta, fecha, saldo, tipo_movimiento, valor) 
+    values
+        (?, ?, ?, ?, ?)
+2025-08-06 11:52:10.326 [http-nio-8081-exec-7] DEBUG org.hibernate.SQL - 
+    update
+        cuenta 
+    set
+        cliente_id=?,
+        estado=?,
+        fecha_actualizacion=?,
+        fecha_creacion=?,
+        saldo_inicial=?,
+        tipo_cuenta=? 
+    where
+        numero_cuenta=?
+2025-08-06 11:55:20.317 [http-nio-8081-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:55:20.325 [http-nio-8081-exec-5] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        movimiento
+        (numero_cuenta, fecha, saldo, tipo_movimiento, valor) 
+    values
+        (?, ?, ?, ?, ?)
+2025-08-06 11:55:20.331 [http-nio-8081-exec-5] DEBUG org.hibernate.SQL - 
+    update
+        cuenta 
+    set
+        cliente_id=?,
+        estado=?,
+        fecha_actualizacion=?,
+        fecha_creacion=?,
+        saldo_inicial=?,
+        tipo_cuenta=? 
+    where
+        numero_cuenta=?
+2025-08-06 11:57:58.974 [http-nio-8081-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:58:53.826 [http-nio-8081-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 11:58:53.964 [http-nio-8081-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    left join
+        cuenta c1_0 
+            on c1_0.numero_cuenta=m1_0.numero_cuenta 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 12:01:16.877 [http-nio-8081-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    where
+        m1_0.fecha between ? and ?
+2025-08-06 12:01:30.358 [http-nio-8081-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    where
+        m1_0.fecha between ? and ?
+2025-08-06 12:02:08.372 [http-nio-8081-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    where
+        m1_0.fecha between ? and ?
+2025-08-06 12:02:08.392 [http-nio-8081-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 12:07:20.092 [http-nio-8081-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.cliente_id=?
+2025-08-06 12:07:20.107 [http-nio-8081-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    left join
+        cuenta c1_0 
+            on c1_0.numero_cuenta=m1_0.numero_cuenta 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 12:07:33.526 [http-nio-8081-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.cliente_id=?
+2025-08-06 12:07:33.542 [http-nio-8081-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    left join
+        cuenta c1_0 
+            on c1_0.numero_cuenta=m1_0.numero_cuenta 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 18:18:23.495 [http-nio-8081-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 18:18:35.132 [http-nio-8081-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        c1_0.numero_cuenta,
+        c1_0.cliente_id,
+        c1_0.estado,
+        c1_0.fecha_actualizacion,
+        c1_0.fecha_creacion,
+        c1_0.saldo_inicial,
+        c1_0.tipo_cuenta 
+    from
+        cuenta c1_0 
+    where
+        c1_0.numero_cuenta=?
+2025-08-06 18:18:35.414 [http-nio-8081-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.numero_cuenta,
+        m1_0.fecha,
+        m1_0.saldo,
+        m1_0.tipo_movimiento,
+        m1_0.valor 
+    from
+        movimiento m1_0 
+    left join
+        cuenta c1_0 
+            on c1_0.numero_cuenta=m1_0.numero_cuenta 
+    where
+        c1_0.numero_cuenta=?

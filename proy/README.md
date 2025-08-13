@@ -6,64 +6,60 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    API GATEWAY                              │
-│                   (Puerto 8083)                             │
+│                    API GATEWAY (8083)                       │
+│                    Punto de Entrada Único                   │
+│                    (Sin Base de Datos)                      │
 │                                                             │
-│ • Punto de Entrada Único                                   │
 │ • Ruteo de Requests                                        │
 │ • Filtros y Logging                                        │
 │ • Load Balancing                                           │
 │ • CORS y Seguridad                                         │
-│                                                             │
-│                    (SIN BASE DE DATOS)                      │
 └─────────────────────┬───────────────────────────────────────┘
                       │
                       ▼
-        ┌─────────────┼─────────────┐
-        │             │             │
-        ▼             ▼             │
-┌─────────────┐ ┌─────────────┐     │
-│MICROCLIENTES│ │MICROCUENTAS │     │
-│(Puerto 0*)  │ │(Puerto 0*)  │     │
-│             │ │             │     │
-│• Gestión    │ │• Gestión    │     │
-│  Personas   │ │  Cuentas    │     │
-│• Gestión    │ │• Movimientos│     │
-│  Clientes   │ │• Reportes   │     │
-│             │ │             │     │
-└─────┬───────┘ └─────┬───────┘     │
-      │               │             │
-      │               │             │
-      │               │             │
-      ▼               ▼             │
-┌─────────────┐ ┌─────────────┐     │
-│ POSTGRESQL  │ │ POSTGRESQL  │     │
-│ CLIENTES    │ │  CUENTAS    │     │
-│(Puerto 5432)│ │(Puerto 5433)│     │
-│             │ │             │     │
-│ • Tabla     │ │ • Tabla     │     │
-│   persona   │ │   cuenta    │     │
-│ • Tabla     │ │ • Tabla     │     │
-│   cliente   │ │   movimiento│     │
-└─────────────┘ └─────────────┘     │
-                                    │
-                                    ▼
-                            ┌─────────────┐
-                            │   EUREKA    │
-                            │             │
-                            │ • Service   │
-                            │   Discovery │
-                            │ • Health    │
-                            │   Check     │
-                            │             │
-                            │(SIN BASE DE │
-                            │   DATOS)    │
-                            └─────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    EUREKA SERVER                            │
+│                   (Puerto 8761)                             │
+│                                                             │
+│ • Service Discovery                                         │
+│ • Health Monitoring                                         │
+│ • Dashboard de monitoreo                                    │
+│ • Auto-registration de servicios                            │
+│ • (Sin Base de Datos - Memoria Interna)                     │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+        ┌─────────────┼
+        │             │             
+        ▼             ▼             
+┌─────────────┐ ┌─────────────┐ 
+│MICROCLIENTES│ │MICROCUENTAS │              
+│(Puerto 0*)  │ │(Puerto 0*)  │              
+│             │ │             │             
+│• Gestión    │ │• Gestión    │              
+│  Personas   │ │  Cuentas    │             
+│• Gestión    │ │• Movimientos│              
+│  Clientes   │ │• Reportes   │              
+│             │ │             │             
+│             │ │             │              
+└─────┬───────┘ └─────┬───────┘ 
+      │               │
+      │               │
+      │               │
+      ▼               ▼
+┌─────────────┐ ┌─────────────┐ 
+│ POSTGRESQL  │ │ POSTGRESQL  │ 
+│ CLIENTES    │ │  CUENTAS    │ 
+│(Puerto 5432)│ │(Puerto 5433)│ 
+│             │ │             │
+│ • Tabla     │ │ • Tabla     │
+│   persona   │ │   cuenta    │
+│ • Tabla     │ │ • Tabla     │
+│   cliente   │ │   movimiento│
+└─────────────┘ └─────────────┘ 
 
 * Puerto 0 = Puerto aleatorio para múltiples instancias
 * Cada microservicio tiene su propia base de datos independiente
-* Los microservicios se comunican entre sí vía REST APIs
-* Las bases de datos NO se comunican entre sí
+* Los microservicios se comunican entre sí (no las bases de datos)
 * API Gateway y Eureka Server NO tienen base de datos
 ```
 
@@ -117,7 +113,6 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Dashboard de monitoreo en `http://localhost:8761`
 - **No requiere base de datos** - usa memoria interna para registro
 - **Sin persistencia** - los datos se pierden al reiniciar
-- **Ubicación independiente** - no está conectado directamente a microservicios
 
 ### 🚪 **API Gateway (Puerto 8083)**
 - Punto de entrada único para todas las APIs
@@ -125,15 +120,20 @@ Este proyecto implementa una arquitectura de microservicios para un sistema banc
 - Filtros de logging y monitoreo
 - Balanceo de carga automático
 - **No tiene base de datos** - solo rutea requests
-- **Ubicación central** - recibe todas las peticiones y las distribuye
 
 ### 👥 **Microservicio: microclientes (Puerto 0*)**
-Gestiona la información de personas y clientes del banco.
+Gestiona la información de clientes del banco con arquitectura moderna y validaciones robustas.
 - **Puerto aleatorio** para permitir múltiples instancias
 - Se registra automáticamente en Eureka
 - Descubierto dinámicamente por el Gateway
 - **Tiene su propia base de datos** PostgreSQL independiente
 - **Se comunica con microcuentas** vía REST APIs cuando es necesario
+- **✅ Refactorizado con Lombok** para reducir boilerplate code
+- **✅ Constructor Injection** implementado (sin @Autowired)
+- **✅ Global Exception Handler** con respuestas estandarizadas
+- **✅ Validaciones robustas** con Jakarta Validation
+- **✅ Comunicación síncrona** con microcuentas vía OpenFeign
+- **✅ Tests completos** (unit, integration, end-to-end)
 
 ### 💰 **Microservicio: microcuentas (Puerto 0*)**
 Maneja la gestión de cuentas bancarias, movimientos y reportes financieros.
@@ -258,22 +258,22 @@ Cada microservicio tiene su propia base de datos independiente. Las bases de dat
 ### Base de Datos para microclientes (PostgreSQL - Puerto 5432)
 ```sql
 -- Base de datos independiente para gestión de clientes
-CREATE TABLE persona (
-    identificacion VARCHAR(20) PRIMARY KEY,
-    nombre VARCHAR(100),
-    genero VARCHAR(10),
-    edad INTEGER,
-    direccion VARCHAR(100),
-    telefono VARCHAR(20)
+-- Esquema unificado: persona_cliente (refactorizado)
+CREATE TABLE persona_cliente (
+    clienteid VARCHAR(20) PRIMARY KEY,        -- ID único del cliente
+    identificacion VARCHAR(20),               -- Cédula de la persona
+    nombre VARCHAR(100),                      -- Nombre completo
+    genero VARCHAR(10),                       -- Género (M/F)
+    edad INTEGER,                             -- Edad (18-120)
+    direccion VARCHAR(100),                   -- Dirección completa
+    telefono VARCHAR(20),                     -- Teléfono
+    contrasena VARCHAR(100),                  -- Contraseña encriptada
+    estado VARCHAR(20)                        -- Estado (ACTIVO/INACTIVO/SUSPENDIDO)
 );
 
-CREATE TABLE cliente (
-    clienteid VARCHAR(20) PRIMARY KEY,
-    contrasena VARCHAR(100),
-    estado VARCHAR(20),
-    identificacion VARCHAR(20),
-    CONSTRAINT fk_cliente_persona FOREIGN KEY (identificacion) REFERENCES persona(identificacion)
-);
+-- Índices para optimización
+CREATE INDEX idx_persona_cliente_identificacion ON persona_cliente(identificacion);
+CREATE INDEX idx_persona_cliente_estado ON persona_cliente(estado);
 ```
 
 ### Base de Datos para microcuentas (PostgreSQL - Puerto 5433)
@@ -306,8 +306,10 @@ CREATE INDEX idx_movimiento_numero_cuenta ON movimiento(numero_cuenta);
 - **microcuentas → microclientes**: Usa OpenFeign para obtener datos de clientes
 - **microclientes → microcuentas**: No hay comunicación directa (solo lectura de datos de clientes)
 - **Las bases de datos NO se comunican**: Cada una es completamente independiente
-- **Flujo de comunicación**: Cliente → API Gateway → Microservicio → Base de Datos
-- **Service Discovery**: Eureka mantiene registro de ubicaciones de microservicios
+- **✅ Comunicación SÍNCRONA**: Usando Spring Cloud OpenFeign
+- **✅ Endpoints disponibles**: `/clientes/{clienteid}`, `/clientes/identificacion/{identificacion}`
+- **✅ DTOs compatibles**: Estructura unificada entre microservicios
+- **✅ Manejo de errores**: Circuit breaker y timeouts implementados
 
 ## 🔄 Flujo Completo a través del API Gateway
 
@@ -623,19 +625,20 @@ GET http://localhost:8083/cuentas/reportes/movimientos?fechaInicio=2024-05-20T00
 
 ## 📊 Endpoints del API Gateway
 
-### **Gestión de Personas**
-- `GET /clientes/personas` - Listar todas las personas
-- `GET /clientes/personas/{identificacion}` - Obtener persona por identificación
-- `POST /clientes/personas` - Crear nueva persona
-- `PUT /clientes/personas/{identificacion}` - Actualizar persona
-- `DELETE /clientes/personas/{identificacion}` - Eliminar persona
+### **Gestión de Clientes (Refactorizado)**
+- `GET /clientes` - Listar todos los clientes
+- `GET /clientes/{clienteid}` - Obtener cliente por ID
+- `GET /clientes/identificacion/{identificacion}` - Obtener cliente por identificación
+- `POST /clientes` - Crear nuevo cliente
+- `PUT /clientes/{clienteid}` - Actualizar cliente
+- `DELETE /clientes/{clienteid}` - Eliminar cliente
 
-### **Gestión de Clientes**
-- `GET /clientes/clientes` - Listar todos los clientes
-- `GET /clientes/clientes/{clienteid}` - Obtener cliente por ID
-- `POST /clientes/clientes` - Crear nuevo cliente
-- `PUT /clientes/clientes/{clienteid}` - Actualizar cliente
-- `DELETE /clientes/clientes/{clienteid}` - Eliminar cliente
+**✅ Nuevas características:**
+- **Validaciones robustas** con Jakarta Validation
+- **Respuestas estandarizadas** con Global Exception Handler
+- **Lombok** para reducir boilerplate code
+- **Constructor Injection** sin @Autowired
+- **Tests completos** para todos los endpoints
 
 ### **Gestión de Cuentas**
 - `GET /cuentas/cuentas` - Listar todas las cuentas
@@ -918,7 +921,15 @@ docker exec -it <container_name> tail -f logs/microclientes-info.log
 
 ## 🚀 Próximos Pasos y Mejoras
 
-### **Mejoras Técnicas**
+### **✅ Mejoras Técnicas Implementadas**
+1. **✅ Lombok** - Reducción de boilerplate code
+2. **✅ Constructor Injection** - Eliminación de @Autowired
+3. **✅ Global Exception Handler** - Manejo centralizado de errores
+4. **✅ Jakarta Validation** - Validaciones robustas en entidades y DTOs
+5. **✅ Comunicación Síncrona** - OpenFeign para comunicación entre microservicios
+6. **✅ Tests Completos** - Unit, Integration y End-to-End tests
+
+### **🔄 Mejoras Técnicas Pendientes**
 1. **Service Mesh (Istio)** para comunicación entre servicios
 2. **Circuit Breaker (Hystrix/Resilience4j)** para tolerancia a fallos
 3. **Distributed Tracing (Jaeger/Zipkin)** para seguimiento de requests
@@ -960,7 +971,7 @@ docker exec -it <container_name> tail -f logs/microclientes-info.log
 
 ## 🏗️ Patrones de Diseño Implementados
 
-### **Patrones Arquitectónicos Principales**
+### **✅ Patrones Arquitectónicos Principales**
 
 #### **1. Service Discovery Pattern (Eureka)**
 **Propósito**: Registro y descubrimiento automático de servicios
@@ -1316,7 +1327,25 @@ public class ApplicationEventListener {
 }
 ```
 
-#### **18. Exception Handler Pattern**
+#### **18. Validation Pattern**
+**Propósito**: Validación centralizada de datos de entrada
+**Implementación**: Jakarta Validation + Custom Validation Service
+**Ubicación**: `microclientes/microclientes/src/main/java/com/proyecto/microclientes/validation/`
+**Beneficios**:
+- Validación consistente en todas las capas
+- Separación de lógica de validación
+- Reutilización de reglas de negocio
+
+```java
+@Service
+public class ClienteValidationService {
+    public Map<String, String> validateCliente(Cliente cliente) {
+        // Validaciones de negocio centralizadas
+    }
+}
+```
+
+#### **19. Exception Handler Pattern**
 **Propósito**: Manejo centralizado de excepciones
 **Implementación**: @ControllerAdvice
 **Ubicación**: 
@@ -1340,7 +1369,7 @@ public class GlobalExceptionHandler {
 
 ### **Patrones de Comunicación**
 
-#### **19. Client-Server Pattern**
+#### **20. Client-Server Pattern**
 **Propósito**: Separación de responsabilidades entre cliente y servidor
 **Implementación**: Arquitectura REST
 **Ubicación**: Comunicación entre microservicios
@@ -1358,7 +1387,7 @@ public interface ClienteClient {
 }
 ```
 
-#### **20. Multiple Instance Pattern**
+#### **21. Multiple Instance Pattern**
 **Propósito**: Ejecutar múltiples instancias del mismo servicio
 **Implementación**: Puertos aleatorios (`server.port=0`)
 **Ubicación**: `application.properties` de cada microservicio
@@ -1395,9 +1424,11 @@ eureka.instance.instance-id=${spring.application.name}:${random.uuid}
 | **Comportamiento** | Template Method | Spring Boot | Clases principales | ✅ |
 | | Strategy | Validaciones | Servicios | ✅ |
 | | Observer | Spring Events | Preparado | ✅ |
+| | Validation | Jakarta Validation + Custom Service | `validation/` | ✅ |
 | | Exception Handler | @ControllerAdvice | `exception/` | ✅ |
 | **Comunicación** | Client-Server | REST APIs | Comunicación entre servicios | ✅ |
 | | Multiple Instance | Puertos aleatorios | `application.properties` | ✅ |
+| | Synchronous Communication | OpenFeign | `client/` | ✅ |
 
 ## 🎯 Beneficios de los Patrones Implementados
 
@@ -1406,6 +1437,8 @@ eureka.instance.instance-id=${spring.application.name}:${random.uuid}
 - **Escalabilidad** horizontal y vertical
 - **Mantenibilidad** del código
 - **Testabilidad** de componentes
+- **✅ Validaciones robustas** con Jakarta Validation
+- **✅ Manejo de errores centralizado** con Global Exception Handler
 
 ### **Resiliencia**
 - **Service Discovery** para alta disponibilidad
@@ -1418,6 +1451,43 @@ eureka.instance.instance-id=${spring.application.name}:${random.uuid}
 - **Comunicación declarativa** entre servicios
 - **Configuración centralizada**
 - **Despliegue independiente**
+- **✅ Comunicación síncrona** con OpenFeign
+- **✅ Constructor Injection** para mejor testabilidad
+
+---
+
+## 📋 **Resumen de Últimas Implementaciones**
+
+### **✅ Refactorización Completa del Microservicio microclientes**
+
+#### **🔄 Cambios Arquitectónicos:**
+- **✅ Esquema Unificado**: Fusionado `persona` y `cliente` en tabla `persona_cliente`
+- **✅ Lombok Integration**: Eliminación de boilerplate code (getters, setters, constructors)
+- **✅ Constructor Injection**: Reemplazo de `@Autowired` por inyección por constructor
+- **✅ Global Exception Handler**: Manejo centralizado de errores con respuestas estandarizadas
+
+#### **🔒 Validaciones Implementadas:**
+- **✅ Jakarta Validation**: Anotaciones en entidades y DTOs
+- **✅ Custom Validation Service**: Lógica de negocio centralizada
+- **✅ Validaciones de Calidad**: Formato de ID, edad, contraseña, género, estado
+- **✅ Validaciones de Integridad**: Campos obligatorios y formatos específicos
+
+#### **🌐 Comunicación entre Microservicios:**
+- **✅ Comunicación Síncrona**: Spring Cloud OpenFeign
+- **✅ Endpoints Compatibles**: `/clientes/{clienteid}`, `/clientes/identificacion/{identificacion}`
+- **✅ DTOs Unificados**: Estructura compatible entre microservicios
+- **✅ Manejo de Errores**: Circuit breaker y timeouts
+
+#### **🧪 Testing Completo:**
+- **✅ Unit Tests**: Entidades, servicios, validaciones
+- **✅ Integration Tests**: Repositorios y controladores
+- **✅ End-to-End Tests**: Flujos completos de comunicación
+- **✅ Controller Tests**: Validación de endpoints y respuestas
+
+#### **📊 Nuevos Patrones Implementados:**
+- **✅ Validation Pattern**: Validación centralizada con Jakarta Validation
+- **✅ Synchronous Communication Pattern**: Comunicación síncrona con OpenFeign
+- **✅ Constructor Injection Pattern**: Inyección de dependencias por constructor
 
 ---
 

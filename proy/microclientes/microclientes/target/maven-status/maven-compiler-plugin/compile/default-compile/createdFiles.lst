@@ -1,4 +1,3 @@
-com\proyecto\microclientes\controller\PersonaController.class
 com\proyecto\microclientes\repository\ClienteRepository.class
 com\proyecto\microclientes\controller\ClienteController.class
 com\proyecto\microclientes\config\ModelMapperConfig.class
@@ -7,6 +6,7 @@ com\proyecto\microclientes\exception\GlobalExceptionHandler.class
 com\proyecto\microclientes\repository\PersonaRepository.class
 com\proyecto\microclientes\MicroclientesApplication.class
 com\proyecto\microclientes\entity\Cliente.class
+com\proyecto\microclientes\exception\GlobalExceptionHandler$ErrorResponse.class
 com\proyecto\microclientes\dto\PersonaDTO.class
 com\proyecto\microclientes\config\CorsConfig.class
 com\proyecto\microclientes\dto\ClienteDTO.class

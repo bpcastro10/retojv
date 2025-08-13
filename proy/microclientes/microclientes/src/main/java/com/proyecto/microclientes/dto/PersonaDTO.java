@@ -1,23 +1,46 @@
 package com.proyecto.microclientes.dto;
 
-public class PersonaDTO {
-    private String identificacion;
-    private String nombre;
-    private String genero;
-    private Integer edad;
-    private String direccion;
-    private String telefono;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String getIdentificacion() { return identificacion; }
-    public void setIdentificacion(String identificacion) { this.identificacion = identificacion; }
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-    public String getGenero() { return genero; }
-    public void setGenero(String genero) { this.genero = genero; }
-    public Integer getEdad() { return edad; }
-    public void setEdad(Integer edad) { this.edad = edad; }
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
-} 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PersonaDTO {
+    
+    @NotBlank(message = "La identificación es obligatoria")
+    @Size(min = 8, max = 20, message = "La identificación debe tener entre 8 y 20 caracteres")
+    @Pattern(regexp = "^[0-9]+$", message = "La identificación debe contener solo números")
+    private String identificacion;
+    
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El nombre debe contener solo letras y espacios")
+    private String nombre;
+    
+    @NotBlank(message = "El género es obligatorio")
+    @Pattern(regexp = "^(M|F)$", message = "El género debe ser 'M' o 'F'")
+    private String genero;
+    
+    @NotNull(message = "La edad es obligatoria")
+    @Min(value = 0, message = "La edad debe ser mayor o igual a 0")
+    @Max(value = 150, message = "La edad debe ser menor o igual a 150")
+    private Integer edad;
+    
+    @NotBlank(message = "La dirección es obligatoria")
+    @Size(min = 5, max = 100, message = "La dirección debe tener entre 5 y 100 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\\s,.-]+$", message = "La dirección contiene caracteres no válidos")
+    private String direccion;
+    
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Size(min = 7, max = 20, message = "El teléfono debe tener entre 7 y 20 caracteres")
+    @Pattern(regexp = "^[0-9\\-\\+\\(\\)\\s]+$", message = "El teléfono contiene caracteres no válidos")
+    private String telefono;
+}

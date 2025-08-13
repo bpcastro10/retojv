@@ -1,11 +1,10 @@
 package com.proyecto.microclientes.service;
 
 import com.proyecto.microclientes.entity.Cliente;
-import com.proyecto.microclientes.entity.Persona;
 import com.proyecto.microclientes.repository.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,70 +29,61 @@ class ClienteServiceTest {
     private ClienteService clienteService;
 
     private Cliente cliente;
-    private Persona persona;
 
     @BeforeEach
     void setUp() {
-        // Configurar persona de prueba
-        persona = new Persona();
-        persona.setIdentificacion("12345678");
-        persona.setNombre("Juan Pérez");
-        persona.setGenero("M");
-        persona.setEdad(30);
-        persona.setDireccion("Calle Principal 123");
-        persona.setTelefono("555-1234");
-
         // Configurar cliente de prueba
         cliente = new Cliente();
         cliente.setClienteid("CLI001");
+        cliente.setIdentificacion("12345678");
+        cliente.setNombre("Juan Pérez");
+        cliente.setGenero("M");
+        cliente.setEdad(30);
+        cliente.setDireccion("Calle Principal 123");
+        cliente.setTelefono("555-1234");
         cliente.setContrasena("password123");
         cliente.setEstado("ACTIVO");
-        cliente.setPersona(persona);
     }
 
     @Test
     @DisplayName("Debería listar todos los clientes correctamente")
     void testListar() {
-        // Arrange
-        List<Cliente> clientesEsperados = Arrays.asList(cliente);
+        // Given
+        Cliente cliente2 = new Cliente();
+        cliente2.setClienteid("CLI002");
+        cliente2.setIdentificacion("87654321");
+        cliente2.setNombre("María García");
+        cliente2.setGenero("F");
+        cliente2.setEdad(25);
+        cliente2.setDireccion("Avenida Central 456");
+        cliente2.setTelefono("555-5678");
+        cliente2.setContrasena("password456");
+        cliente2.setEstado("ACTIVO");
+
+        List<Cliente> clientesEsperados = Arrays.asList(cliente, cliente2);
         when(clienteRepository.findAll()).thenReturn(clientesEsperados);
 
-        // Act
+        // When
         List<Cliente> resultado = clienteService.listar();
 
-        // Assert
+        // Then
         assertNotNull(resultado);
-        assertEquals(1, resultado.size());
-        assertEquals(cliente, resultado.get(0));
-        verify(clienteRepository, times(1)).findAll();
-    }
-
-    @Test
-    @DisplayName("Debería retornar lista vacía cuando no hay clientes")
-    void testListarVacio() {
-        // Arrange
-        when(clienteRepository.findAll()).thenReturn(Arrays.asList());
-
-        // Act
-        List<Cliente> resultado = clienteService.listar();
-
-        // Assert
-        assertNotNull(resultado);
-        assertTrue(resultado.isEmpty());
+        assertEquals(2, resultado.size());
+        assertEquals(clientesEsperados, resultado);
         verify(clienteRepository, times(1)).findAll();
     }
 
     @Test
     @DisplayName("Debería buscar cliente por ID correctamente")
     void testBuscarPorId() {
-        // Arrange
+        // Given
         String clienteId = "CLI001";
         when(clienteRepository.findById(clienteId)).thenReturn(Optional.of(cliente));
 
-        // Act
+        // When
         Cliente resultado = clienteService.buscarPorId(clienteId);
 
-        // Assert
+        // Then
         assertNotNull(resultado);
         assertEquals(cliente, resultado);
         assertEquals(clienteId, resultado.getClienteid());
@@ -101,115 +92,108 @@ class ClienteServiceTest {
 
     @Test
     @DisplayName("Debería lanzar excepción cuando cliente no existe")
-    void testBuscarPorIdNoExiste() {
-        // Arrange
+    void testBuscarPorIdClienteNoExiste() {
+        // Given
         String clienteId = "CLI999";
         when(clienteRepository.findById(clienteId)).thenReturn(Optional.empty());
 
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> {
+        // When & Then
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             clienteService.buscarPorId(clienteId);
         });
+
+        assertEquals("Cliente no encontrado con ID: " + clienteId, exception.getMessage());
         verify(clienteRepository, times(1)).findById(clienteId);
     }
 
     @Test
     @DisplayName("Debería guardar cliente correctamente")
     void testGuardar() {
-        // Arrange
+        // Given
         Cliente clienteNuevo = new Cliente();
-        clienteNuevo.setClienteid("CLI002");
-        clienteNuevo.setContrasena("nuevaPassword");
+        clienteNuevo.setClienteid("CLI003");
+        clienteNuevo.setIdentificacion("11223344");
+        clienteNuevo.setNombre("Carlos López");
+        clienteNuevo.setGenero("M");
+        clienteNuevo.setEdad(35);
+        clienteNuevo.setDireccion("Plaza Mayor 789");
+        clienteNuevo.setTelefono("555-9012");
+        clienteNuevo.setContrasena("password789");
         clienteNuevo.setEstado("ACTIVO");
-        clienteNuevo.setPersona(persona);
 
-        when(clienteRepository.save(clienteNuevo)).thenReturn(clienteNuevo);
+        when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteNuevo);
 
-        // Act
+        // When
         Cliente resultado = clienteService.guardar(clienteNuevo);
 
-        // Assert
+        // Then
         assertNotNull(resultado);
         assertEquals(clienteNuevo, resultado);
-        assertEquals("CLI002", resultado.getClienteid());
+        assertEquals("CLI003", resultado.getClienteid());
+        assertEquals("Carlos López", resultado.getNombre());
         verify(clienteRepository, times(1)).save(clienteNuevo);
     }
 
     @Test
     @DisplayName("Debería actualizar cliente existente correctamente")
     void testActualizarCliente() {
-        // Arrange
-        cliente.setContrasena("passwordActualizada");
-        cliente.setEstado("INACTIVO");
-        
-        when(clienteRepository.save(cliente)).thenReturn(cliente);
+        // Given
+        Cliente clienteActualizado = new Cliente();
+        clienteActualizado.setClienteid("CLI001");
+        clienteActualizado.setIdentificacion("12345678");
+        clienteActualizado.setNombre("Juan Pérez Actualizado");
+        clienteActualizado.setGenero("M");
+        clienteActualizado.setEdad(31);
+        clienteActualizado.setDireccion("Nueva Dirección 456");
+        clienteActualizado.setTelefono("555-9999");
+        clienteActualizado.setContrasena("nuevaPassword");
+        clienteActualizado.setEstado("ACTIVO");
 
-        // Act
-        Cliente resultado = clienteService.guardar(cliente);
+        when(clienteRepository.save(any(Cliente.class))).thenReturn(clienteActualizado);
 
-        // Assert
+        // When
+        Cliente resultado = clienteService.guardar(clienteActualizado);
+
+        // Then
         assertNotNull(resultado);
-        assertEquals("passwordActualizada", resultado.getContrasena());
-        assertEquals("INACTIVO", resultado.getEstado());
-        verify(clienteRepository, times(1)).save(cliente);
+        assertEquals(clienteActualizado, resultado);
+        assertEquals("Juan Pérez Actualizado", resultado.getNombre());
+        assertEquals(31, resultado.getEdad());
+        verify(clienteRepository, times(1)).save(clienteActualizado);
     }
 
     @Test
     @DisplayName("Debería eliminar cliente correctamente")
     void testEliminar() {
-        // Arrange
+        // Given
         String clienteId = "CLI001";
         doNothing().when(clienteRepository).deleteById(clienteId);
 
-        // Act
+        // When
         clienteService.eliminar(clienteId);
 
-        // Assert
+        // Then
         verify(clienteRepository, times(1)).deleteById(clienteId);
     }
 
     @Test
-    @DisplayName("Debería manejar múltiples clientes en listar")
-    void testListarMultiplesClientes() {
-        // Arrange
-        Cliente cliente2 = new Cliente();
-        cliente2.setClienteid("CLI002");
-        cliente2.setContrasena("password456");
-        cliente2.setEstado("ACTIVO");
-        cliente2.setPersona(persona);
+    @DisplayName("Debería manejar cliente con campos nulos")
+    void testClienteConCamposNulos() {
+        // Given
+        Cliente clienteConNulos = new Cliente();
+        clienteConNulos.setClienteid("CLI004");
+        // Los demás campos se mantienen nulos
 
-        List<Cliente> clientesEsperados = Arrays.asList(cliente, cliente2);
-        when(clienteRepository.findAll()).thenReturn(clientesEsperados);
+        when(clienteRepository.save(clienteConNulos)).thenReturn(clienteConNulos);
 
-        // Act
-        List<Cliente> resultado = clienteService.listar();
+        // When
+        Cliente resultado = clienteService.guardar(clienteConNulos);
 
-        // Assert
+        // Then
         assertNotNull(resultado);
-        assertEquals(2, resultado.size());
-        assertEquals("CLI001", resultado.get(0).getClienteid());
-        assertEquals("CLI002", resultado.get(1).getClienteid());
-        verify(clienteRepository, times(1)).findAll();
-    }
-
-    @Test
-    @DisplayName("Debería manejar cliente con persona nula")
-    void testClienteConPersonaNula() {
-        // Arrange
-        Cliente clienteSinPersona = new Cliente();
-        clienteSinPersona.setClienteid("CLI003");
-        clienteSinPersona.setContrasena("password789");
-        clienteSinPersona.setEstado("ACTIVO");
-        clienteSinPersona.setPersona(null);
-
-        when(clienteRepository.save(clienteSinPersona)).thenReturn(clienteSinPersona);
-
-        // Act
-        Cliente resultado = clienteService.guardar(clienteSinPersona);
-
-        // Assert
-        assertNotNull(resultado);
-        assertNull(resultado.getPersona());
-        verify(clienteRepository, times(1)).save(clienteSinPersona);
+        assertEquals("CLI004", resultado.getClienteid());
+        assertNull(resultado.getNombre());
+        assertNull(resultado.getIdentificacion());
+        verify(clienteRepository, times(1)).save(clienteConNulos);
     }
 } 

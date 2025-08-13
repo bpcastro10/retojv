@@ -1,0 +1,18 @@
+2025-07-30 17:48:45.594 [restartedMain] DEBUG org.hibernate.SQL - create table persona_cliente (clienteid varchar(255) not null, contrasena varchar(255), direccion varchar(255), edad integer, estado varchar(255), genero varchar(255), identificacion varchar(255), nombre varchar(255), telefono varchar(255), primary key (clienteid))
+2025-07-30 18:03:19.848 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column clienteid set data type varchar(20)
+2025-07-30 18:03:19.898 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column contrasena set data type varchar(100)
+2025-07-30 18:03:19.935 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column direccion set data type varchar(100)
+2025-07-30 18:03:19.980 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column identificacion set data type varchar(20)
+2025-07-30 18:03:20.021 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column nombre set data type varchar(100)
+2025-07-30 18:03:20.061 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona_cliente alter column telefono set data type varchar(20)
+2025-08-05 12:46:15.699 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists cliente alter column clienteid set data type varchar(20)
+2025-08-05 12:46:15.796 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists cliente alter column contrasena set data type varchar(100)
+2025-08-05 12:46:15.828 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona alter column identificacion set data type varchar(20)
+2025-08-05 12:46:15.866 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona alter column direccion set data type varchar(100)
+2025-08-05 12:46:15.899 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona alter column nombre set data type varchar(100)
+2025-08-05 12:46:15.933 [restartedMain] DEBUG org.hibernate.SQL - alter table if exists persona alter column telefono set data type varchar(20)
+2025-08-05 13:03:45.787 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select c1_0.identificacion,c1_1.direccion,c1_1.edad,c1_1.genero,c1_1.nombre,c1_1.telefono,c1_0.clienteid,c1_0.contrasena,c1_0.estado from cliente c1_0 join persona c1_1 on c1_0.identificacion=c1_1.identificacion
+2025-08-05 13:03:58.702 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select c1_0.identificacion,c1_1.direccion,c1_1.edad,c1_1.genero,c1_1.nombre,c1_1.telefono,c1_0.clienteid,c1_0.contrasena,c1_0.estado from cliente c1_0 join persona c1_1 on c1_0.identificacion=c1_1.identificacion where c1_0.identificacion=?
+2025-08-05 13:03:58.821 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - insert into persona (direccion,edad,genero,nombre,telefono,identificacion) values (?,?,?,?,?,?)
+2025-08-05 13:03:58.827 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - insert into cliente (clienteid,contrasena,estado,identificacion) values (?,?,?,?)
+2025-08-05 13:04:09.393 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select c1_0.identificacion,c1_1.direccion,c1_1.edad,c1_1.genero,c1_1.nombre,c1_1.telefono,c1_0.clienteid,c1_0.contrasena,c1_0.estado from cliente c1_0 join persona c1_1 on c1_0.identificacion=c1_1.identificacion

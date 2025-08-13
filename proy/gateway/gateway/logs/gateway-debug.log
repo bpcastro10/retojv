@@ -1,28 +1,494 @@
-2025-07-28 20:49:57.623 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
-2025-07-28 20:50:01.040 [restartedMain] DEBUG o.s.c.g.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='clientes-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/clientes/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microclientes, order=0, metadata={}}, RouteDefinition{id='cuentas-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/cuentas/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microcuentas, order=0, metadata={}}, RouteDefinition{id='movimientos-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/movimientos/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microcuentas, order=0, metadata={}}, RouteDefinition{id='reportes-service', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/v1/reportes/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://microcuentas, order=0, metadata={}}]
-2025-07-28 20:50:08.621 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying {_genkey_0=/api/v1/clientes/**} to Path
-2025-07-28 20:50:08.671 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:08.682 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: clientes-service
-2025-07-28 20:50:08.687 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying {_genkey_0=/api/v1/cuentas/**} to Path
-2025-07-28 20:50:08.701 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:08.706 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: cuentas-service
-2025-07-28 20:50:08.719 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying {_genkey_0=/api/v1/movimientos/**} to Path
-2025-07-28 20:50:08.723 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:08.739 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: movimientos-service
-2025-07-28 20:50:08.747 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying {_genkey_0=/api/v1/reportes/**} to Path
-2025-07-28 20:50:08.769 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:08.791 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: reportes-service
-2025-07-28 20:50:08.859 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 4
-2025-07-28 20:50:11.331 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying {_genkey_0=/api/v1/clientes/**} to Path
-2025-07-28 20:50:11.335 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition clientes-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:11.340 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: clientes-service
-2025-07-28 20:50:11.340 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying {_genkey_0=/api/v1/cuentas/**} to Path
-2025-07-28 20:50:11.350 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition cuentas-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:11.354 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: cuentas-service
-2025-07-28 20:50:11.356 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying {_genkey_0=/api/v1/movimientos/**} to Path
-2025-07-28 20:50:11.356 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition movimientos-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:11.359 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: movimientos-service
-2025-07-28 20:50:11.359 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying {_genkey_0=/api/v1/reportes/**} to Path
-2025-07-28 20:50:11.361 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition reportes-service applying filter {_genkey_0=1} to StripPrefix
-2025-07-28 20:50:11.369 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: reportes-service
-2025-07-28 20:50:11.369 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 4
+2025-08-06 12:35:24.798 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-08-06 12:35:32.545 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:35:32.583 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:35:32.606 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:35:32.634 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 1
+2025-08-06 12:35:35.059 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:35:35.060 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:35:35.061 [restartedMain] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:35:35.063 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 1
+2025-08-06 12:36:02.407 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:36:02.410 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:36:02.411 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:36:02.412 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:36:02.415 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:36:02.416 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:36:02.420 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:36:32.452 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:36:32.455 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:36:32.456 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:36:32.457 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:36:32.459 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:36:32.461 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:36:32.464 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:37:02.496 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:37:02.500 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:37:02.502 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:37:02.503 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:37:02.506 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:37:02.509 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:37:02.514 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:37:32.545 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:37:32.548 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:37:32.549 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:37:32.549 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:37:32.551 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:37:32.552 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:37:32.555 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:38:02.581 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:38:02.589 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:38:02.595 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:38:02.596 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:38:02.598 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:38:02.601 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:38:02.603 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:38:32.628 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:39:02.678 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:39:02.687 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:39:02.692 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:39:02.694 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:39:02.696 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:39:02.697 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:39:02.700 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:39:32.725 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:39:32.730 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:39:32.733 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:39:32.733 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:39:32.735 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:39:32.736 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:39:32.739 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:40:02.771 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:40:02.772 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:40:02.773 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:40:02.774 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:40:02.775 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:40:02.776 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:40:02.778 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:40:32.802 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:40:32.803 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:40:32.805 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:40:32.806 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:40:32.808 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:40:32.809 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:40:32.812 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:41:02.844 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:41:02.846 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:41:02.848 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:41:02.848 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:41:02.849 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:41:02.850 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:41:02.852 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:41:32.887 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:41:32.889 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:41:32.890 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:41:32.891 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:41:32.892 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:41:32.893 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:41:32.895 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:42:02.930 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:42:02.932 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:42:02.932 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:42:02.933 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:42:02.934 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:42:02.936 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:42:02.937 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:42:32.958 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:42:32.960 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:42:32.963 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:42:32.964 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:42:32.967 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:42:32.969 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:42:32.971 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:43:02.994 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:43:02.996 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:43:02.998 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:43:02.998 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:43:02.999 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:43:03.000 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:43:03.001 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:43:33.036 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:43:33.037 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:43:33.037 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:43:33.039 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:43:33.040 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:43:33.041 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:43:33.043 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:44:03.067 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:44:03.068 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:44:03.069 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:44:03.069 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:44:03.070 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:44:03.072 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:44:03.077 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:44:33.105 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:44:33.107 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:44:33.107 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:44:33.108 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:44:33.109 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:44:33.110 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:44:33.112 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:45:03.145 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:45:03.147 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:45:03.149 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:45:03.149 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:45:03.151 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:45:03.152 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:45:03.153 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:45:33.177 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:45:33.180 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:45:33.185 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:45:33.186 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:45:33.187 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:45:33.189 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:45:33.192 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:46:03.216 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:46:03.218 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:46:03.219 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:46:03.219 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:46:03.220 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:46:03.221 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:46:03.222 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:46:33.255 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:46:33.257 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:46:33.258 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:46:33.258 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:46:33.259 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:46:33.261 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:46:33.262 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:47:03.291 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:47:03.293 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:47:03.293 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:47:03.294 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:47:03.295 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:47:03.296 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:47:03.298 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:47:33.327 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:47:33.330 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:47:33.335 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:47:33.335 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:47:33.337 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:47:33.338 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:47:33.339 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:48:03.365 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:48:03.367 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:48:03.369 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:48:03.369 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:48:03.371 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:48:03.372 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:48:03.373 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:48:33.397 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:48:33.398 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:48:33.400 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:48:33.400 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:48:33.401 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:48:33.402 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:48:33.403 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:49:03.431 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:49:03.433 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:49:03.436 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:49:03.436 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:49:03.440 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:49:03.440 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:49:03.442 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:49:33.461 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:49:33.463 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:49:33.464 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:49:33.464 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:49:33.465 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:49:33.465 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:49:33.466 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 2
+2025-08-06 12:50:03.492 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:50:03.496 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:50:03.497 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:50:03.498 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:50:03.500 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:50:03.501 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:50:03.501 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:50:03.503 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:50:03.504 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:50:03.505 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:50:33.533 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:50:33.535 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:50:33.537 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:50:33.537 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:50:33.538 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:50:33.539 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:50:33.540 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:50:33.541 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:50:33.542 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:50:33.545 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:51:03.571 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:51:03.573 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:51:03.574 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:51:03.575 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:51:03.576 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:51:03.577 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:51:03.578 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:51:03.579 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:51:03.580 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:51:03.581 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:51:33.613 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:51:33.614 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:51:33.616 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:51:33.617 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:51:33.618 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:51:33.620 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:51:33.620 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:51:33.622 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:51:33.623 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:51:33.625 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:52:03.654 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:52:03.655 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:52:03.656 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:52:03.656 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:52:03.657 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:52:03.658 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:52:03.658 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:52:03.659 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:52:03.659 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:52:03.660 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:52:12.339 [reactor-http-nio-3] DEBUG o.s.c.g.h.RoutePredicateHandlerMapping - Route matched: clientes-service
+2025-08-06 12:52:12.344 [reactor-http-nio-3] DEBUG o.s.c.g.h.RoutePredicateHandlerMapping - Mapping [Exchange: GET http://localhost:8083/api/v1/clientes/CLI001] to Route{id='clientes-service', uri=lb://microclientes, order=0, predicate=Paths: [/api/v1/clientes/**], match trailing slash: true, gatewayFilters=[[[StripPrefix parts = 1], order = 0], [[AddRequestHeader X-Response-Time = '1754501727134'], order = 0], [[AddResponseHeader name = 'X-Gateway-Source', value = 'Spring-Cloud-Gateway', override = true], order = 0], [[AddResponseHeader name = 'X-Service-Name', value = 'microclientes', override = true], order = 0]], metadata={}}
+2025-08-06 12:52:12.345 [reactor-http-nio-3] DEBUG o.s.c.g.h.RoutePredicateHandlerMapping - [5923e748-1] Mapped to org.springframework.cloud.gateway.handler.FilteringWebHandler@15d88849
+2025-08-06 12:52:33.714 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:52:33.719 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:52:33.792 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:52:33.811 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:52:33.828 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:52:33.868 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:52:33.890 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:52:33.939 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:52:34.000 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:52:34.012 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:53:04.043 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:53:04.045 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:53:04.046 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:53:04.046 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:53:04.047 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:53:04.048 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:53:04.048 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:53:04.049 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:53:04.050 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:53:04.051 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:53:34.072 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:53:34.074 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:53:34.076 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:53:34.077 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:53:34.078 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:53:34.079 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:53:34.080 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:53:34.081 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:53:34.082 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:53:34.086 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:54:04.109 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:54:04.110 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:54:04.111 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:54:04.112 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:54:04.114 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:54:04.118 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:54:04.119 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:54:04.121 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:54:04.122 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:54:04.123 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:54:34.151 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:54:34.153 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:54:34.154 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:54:34.155 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:54:34.155 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:54:34.157 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:54:34.157 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:54:34.158 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:54:34.159 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:54:34.159 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:55:04.168 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:55:04.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:55:04.181 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:55:34.214 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:55:34.216 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:55:34.218 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:55:34.218 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:55:34.220 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:55:34.223 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:55:34.223 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:55:34.226 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:55:34.228 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:55:34.228 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:56:04.264 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:56:04.267 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:56:04.268 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:56:04.268 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:56:04.269 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:56:04.270 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:56:04.271 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:56:04.272 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:56:04.272 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:56:04.273 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:56:34.301 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:56:34.302 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:56:34.303 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:56:34.303 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:56:34.304 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:56:34.304 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:56:34.304 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:56:34.305 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:56:34.306 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:56:34.306 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:57:04.334 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:57:04.337 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:57:04.338 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:57:04.339 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:57:04.340 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:57:04.340 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:57:04.341 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:57:04.342 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:57:04.343 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:57:04.344 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:57:34.369 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:57:34.370 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:57:34.371 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:57:34.371 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:57:34.373 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:57:34.373 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:57:34.374 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:57:34.375 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:57:34.376 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:57:34.377 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:58:04.397 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:58:04.400 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:58:04.401 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:58:04.402 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:58:04.404 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:58:04.406 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:58:04.406 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:58:04.408 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:58:04.409 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:58:04.411 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:58:34.440 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:58:34.441 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:58:34.444 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:58:34.446 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:58:34.447 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:58:34.449 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:58:34.449 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:58:34.451 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:58:34.453 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:58:34.454 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 12:59:04.488 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying {pattern=/gateway/**} to Path
+2025-08-06 12:59:04.490 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_GATEWAY applying filter {regexp=/gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:59:04.491 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_GATEWAY
+2025-08-06 12:59:04.491 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying {pattern=/microcuentas/**} to Path
+2025-08-06 12:59:04.494 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCUENTAS applying filter {regexp=/microcuentas/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:59:04.496 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCUENTAS
+2025-08-06 12:59:04.497 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying {pattern=/microclientes/**} to Path
+2025-08-06 12:59:04.498 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_MICROCLIENTES applying filter {regexp=/microclientes/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-08-06 12:59:04.501 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.r.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_MICROCLIENTES
+2025-08-06 12:59:04.505 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 3
+2025-08-06 13:05:59.098 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-08-06 13:06:09.603 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 13:06:11.941 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 16:52:24.593 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-08-06 16:52:31.736 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 16:52:33.967 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 16:53:01.712 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 16:53:31.752 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 16:54:01.785 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:53:03.680 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-08-06 17:53:10.037 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:53:12.378 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:53:40.015 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:54:10.043 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:54:40.071 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:55:10.113 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:55:40.137 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:56:10.161 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:56:40.199 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:57:10.226 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 17:57:40.250 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:01:10.113 [restartedMain] DEBUG c.p.gateway.GatewayApplication - Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-08-06 18:01:17.021 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:01:19.252 [restartedMain] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:01:47.007 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:02:17.039 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:02:47.075 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:03:17.103 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:03:47.141 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:04:17.177 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:04:47.200 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:05:17.215 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:05:47.248 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:06:17.268 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:06:47.299 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:07:17.331 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:07:47.368 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:08:17.378 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:08:47.398 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:09:17.435 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:09:47.451 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:10:17.474 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:10:47.510 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:11:17.535 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:11:47.557 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:12:17.582 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:12:47.609 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:13:17.643 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:13:47.662 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:14:17.701 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:14:47.720 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:15:17.750 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:15:47.773 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:16:17.804 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:16:47.828 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:17:17.842 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:17:22.188 [reactor-http-nio-5] DEBUG o.s.c.g.h.RoutePredicateHandlerMapping - Route matched: clientes-service
+2025-08-06 18:17:22.207 [reactor-http-nio-5] DEBUG o.s.c.g.h.RoutePredicateHandlerMapping - Mapping [Exchange: GET http://localhost:8083/api/v1/clientes/CLI001] to Route{id='clientes-service', uri=http://localhost:8080, order=0, predicate=Paths: [/api/v1/clientes/**], match trailing slash: true, gatewayFilters=[[[StripPrefix parts = 1], order = 0], [[AddRequestHeader X-Response-Time = '1754521272033'], order = 0], [[AddResponseHeader name = 'X-Gateway-Source', value = 'Spring-Cloud-Gateway', override = true], order = 0]], metadata={}}
+2025-08-06 18:17:22.207 [reactor-http-nio-5] DEBUG o.s.c.g.h.RoutePredicateHandlerMapping - [06675a63-3] Mapped to org.springframework.cloud.gateway.handler.FilteringWebHandler@539ff7f4
+2025-08-06 18:17:47.857 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:18:17.892 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:18:47.926 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:19:17.949 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:19:47.982 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:20:18.004 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:20:48.034 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:21:18.061 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:21:48.101 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:22:18.123 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:22:48.149 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:23:18.174 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:23:48.198 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:24:18.217 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:24:48.255 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:25:18.275 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:25:48.308 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:26:18.337 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:26:48.369 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:27:18.407 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:27:48.439 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:28:18.474 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:28:48.512 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:29:18.533 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:29:48.556 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:30:18.588 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:30:48.612 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:31:18.643 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:31:48.673 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:32:18.697 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:32:48.729 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:33:18.756 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:33:48.784 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:34:18.808 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:34:48.843 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:35:18.871 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0
+2025-08-06 18:35:48.909 [DiscoveryClient-CacheRefreshExecutor-%d] DEBUG o.s.c.g.filter.GatewayMetricsFilter - New routes count: 0

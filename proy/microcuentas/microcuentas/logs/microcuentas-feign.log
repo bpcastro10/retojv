@@ -1,0 +1,7 @@
+2025-08-06 11:30:40.009 [http-nio-8081-exec-10] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 1234567890
+2025-08-06 11:39:20.168 [http-nio-8081-exec-3] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 9876543210
+2025-08-06 11:58:53.983 [http-nio-8081-exec-3] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 1234567890
+2025-08-06 12:02:08.403 [http-nio-8081-exec-5] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 1234567890
+2025-08-06 12:07:20.060 [http-nio-8081-exec-2] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 1234567890
+2025-08-06 12:07:33.505 [http-nio-8081-exec-6] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 1234567890
+2025-08-06 18:18:35.425 [http-nio-8081-exec-9] INFO  c.p.m.client.ClienteClient - Obteniendo cliente con identificación: 1234567890

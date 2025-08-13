@@ -1,7 +1,6 @@
 package com.proyecto.microclientes.repository;
 
 import com.proyecto.microclientes.entity.Cliente;
-import com.proyecto.microclientes.entity.Persona;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -22,32 +21,21 @@ class ClienteRepositoryTest {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @Autowired
-    private PersonaRepository personaRepository;
-
     private Cliente cliente;
-    private Persona persona;
 
     @BeforeEach
     void setUp() {
-        // Configurar persona de prueba
-        persona = new Persona();
-        persona.setIdentificacion("12345678");
-        persona.setNombre("Juan Pérez");
-        persona.setGenero("M");
-        persona.setEdad(30);
-        persona.setDireccion("Calle Principal 123");
-        persona.setTelefono("555-1234");
-
-        // Guardar la persona primero
-        persona = personaRepository.save(persona);
-
         // Configurar cliente de prueba
         cliente = new Cliente();
         cliente.setClienteid("CLI001");
+        cliente.setIdentificacion("12345678");
+        cliente.setNombre("Juan Pérez");
+        cliente.setGenero("M");
+        cliente.setEdad(30);
+        cliente.setDireccion("Calle Principal 123");
+        cliente.setTelefono("555-1234");
         cliente.setContrasena("password123");
         cliente.setEstado("ACTIVO");
-        cliente.setPersona(persona);
     }
 
     @Test
@@ -59,10 +47,14 @@ class ClienteRepositoryTest {
         // Assert
         assertNotNull(clienteGuardado);
         assertEquals("CLI001", clienteGuardado.getClienteid());
+        assertEquals("12345678", clienteGuardado.getIdentificacion());
+        assertEquals("Juan Pérez", clienteGuardado.getNombre());
+        assertEquals("M", clienteGuardado.getGenero());
+        assertEquals(30, clienteGuardado.getEdad());
+        assertEquals("Calle Principal 123", clienteGuardado.getDireccion());
+        assertEquals("555-1234", clienteGuardado.getTelefono());
         assertEquals("password123", clienteGuardado.getContrasena());
         assertEquals("ACTIVO", clienteGuardado.getEstado());
-        assertNotNull(clienteGuardado.getPersona());
-        assertEquals("12345678", clienteGuardado.getPersona().getIdentificacion());
     }
 
     @Test
@@ -77,6 +69,7 @@ class ClienteRepositoryTest {
         // Assert
         assertTrue(clienteEncontrado.isPresent());
         assertEquals("CLI001", clienteEncontrado.get().getClienteid());
+        assertEquals("Juan Pérez", clienteEncontrado.get().getNombre());
         assertEquals("password123", clienteEncontrado.get().getContrasena());
     }
 
@@ -96,9 +89,14 @@ class ClienteRepositoryTest {
         // Arrange
         Cliente cliente2 = new Cliente();
         cliente2.setClienteid("CLI002");
+        cliente2.setIdentificacion("87654321");
+        cliente2.setNombre("María García");
+        cliente2.setGenero("F");
+        cliente2.setEdad(25);
+        cliente2.setDireccion("Avenida Central 456");
+        cliente2.setTelefono("555-5678");
         cliente2.setContrasena("password456");
         cliente2.setEstado("ACTIVO");
-        cliente2.setPersona(persona);
 
         clienteRepository.save(cliente);
         clienteRepository.save(cliente2);
@@ -120,21 +118,28 @@ class ClienteRepositoryTest {
         
         Cliente clienteActualizado = new Cliente();
         clienteActualizado.setClienteid("CLI001");
+        clienteActualizado.setIdentificacion("12345678");
+        clienteActualizado.setNombre("Juan Pérez Actualizado");
+        clienteActualizado.setGenero("M");
+        clienteActualizado.setEdad(31);
+        clienteActualizado.setDireccion("Nueva Dirección 456");
+        clienteActualizado.setTelefono("555-9999");
         clienteActualizado.setContrasena("nuevaPassword");
         clienteActualizado.setEstado("INACTIVO");
-        clienteActualizado.setPersona(persona);
 
         // Act
         Cliente resultado = clienteRepository.save(clienteActualizado);
 
         // Assert
+        assertEquals("Juan Pérez Actualizado", resultado.getNombre());
+        assertEquals(31, resultado.getEdad());
         assertEquals("nuevaPassword", resultado.getContrasena());
         assertEquals("INACTIVO", resultado.getEstado());
         
         // Verificar que se actualizó en la base de datos
         Optional<Cliente> clienteEncontrado = clienteRepository.findById("CLI001");
         assertTrue(clienteEncontrado.isPresent());
-        assertEquals("nuevaPassword", clienteEncontrado.get().getContrasena());
+        assertEquals("Juan Pérez Actualizado", clienteEncontrado.get().getNombre());
     }
 
     @Test
@@ -152,26 +157,26 @@ class ClienteRepositoryTest {
     }
 
     @Test
-    @DisplayName("Debería manejar cliente con persona nula")
-    void testClienteConPersonaNula() {
+    @DisplayName("Debería manejar cliente con campos nulos")
+    void testClienteConCamposNulos() {
         // Arrange
-        Cliente clienteSinPersona = new Cliente();
-        clienteSinPersona.setClienteid("CLI003");
-        clienteSinPersona.setContrasena("password789");
-        clienteSinPersona.setEstado("ACTIVO");
-        clienteSinPersona.setPersona(null);
+        Cliente clienteConNulos = new Cliente();
+        clienteConNulos.setClienteid("CLI003");
+        // Los demás campos se mantienen nulos
 
         // Act
-        Cliente clienteGuardado = clienteRepository.save(clienteSinPersona);
+        Cliente clienteGuardado = clienteRepository.save(clienteConNulos);
 
         // Assert
         assertNotNull(clienteGuardado);
-        assertNull(clienteGuardado.getPersona());
+        assertEquals("CLI003", clienteGuardado.getClienteid());
+        assertNull(clienteGuardado.getNombre());
+        assertNull(clienteGuardado.getIdentificacion());
         
         // Verificar que se guardó correctamente
         Optional<Cliente> clienteEncontrado = clienteRepository.findById("CLI003");
         assertTrue(clienteEncontrado.isPresent());
-        assertNull(clienteEncontrado.get().getPersona());
+        assertNull(clienteEncontrado.get().getNombre());
     }
 
     @Test
@@ -182,9 +187,14 @@ class ClienteRepositoryTest {
         
         Cliente cliente2 = new Cliente();
         cliente2.setClienteid("CLI002");
+        cliente2.setIdentificacion("87654321");
+        cliente2.setNombre("María García");
+        cliente2.setGenero("F");
+        cliente2.setEdad(25);
+        cliente2.setDireccion("Avenida Central 456");
+        cliente2.setTelefono("555-5678");
         cliente2.setContrasena("password456");
         cliente2.setEstado("ACTIVO");
-        cliente2.setPersona(persona);
         clienteRepository.save(cliente2);
 
         // Act
@@ -195,23 +205,19 @@ class ClienteRepositoryTest {
     }
 
     @Test
-    @DisplayName("Debería manejar múltiples clientes con diferentes personas")
-    void testMultiplesClientesConDiferentesPersonas() {
+    @DisplayName("Debería manejar múltiples clientes con diferentes datos")
+    void testMultiplesClientesConDiferentesDatos() {
         // Arrange
-        Persona persona2 = new Persona();
-        persona2.setIdentificacion("87654321");
-        persona2.setNombre("María García");
-        persona2.setGenero("F");
-        persona2.setEdad(25);
-        persona2.setDireccion("Avenida Central 456");
-        persona2.setTelefono("555-9876");
-        persona2 = personaRepository.save(persona2);
-
         Cliente cliente2 = new Cliente();
         cliente2.setClienteid("CLI002");
+        cliente2.setIdentificacion("87654321");
+        cliente2.setNombre("María García");
+        cliente2.setGenero("F");
+        cliente2.setEdad(25);
+        cliente2.setDireccion("Avenida Central 456");
+        cliente2.setTelefono("555-5678");
         cliente2.setContrasena("password456");
         cliente2.setEstado("ACTIVO");
-        cliente2.setPersona(persona2);
 
         clienteRepository.save(cliente);
         clienteRepository.save(cliente2);
@@ -223,7 +229,7 @@ class ClienteRepositoryTest {
         assertEquals(2, clientes.size());
         assertTrue(clientes.stream().anyMatch(c -> c.getClienteid().equals("CLI001")));
         assertTrue(clientes.stream().anyMatch(c -> c.getClienteid().equals("CLI002")));
-        assertTrue(clientes.stream().anyMatch(c -> c.getPersona().getIdentificacion().equals("12345678")));
-        assertTrue(clientes.stream().anyMatch(c -> c.getPersona().getIdentificacion().equals("87654321")));
+        assertTrue(clientes.stream().anyMatch(c -> c.getIdentificacion().equals("12345678")));
+        assertTrue(clientes.stream().anyMatch(c -> c.getIdentificacion().equals("87654321")));
     }
 } 

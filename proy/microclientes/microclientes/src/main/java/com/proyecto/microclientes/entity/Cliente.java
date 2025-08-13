@@ -1,27 +1,27 @@
 package com.proyecto.microclientes.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Cliente {
-    @Id
+@Table(name = "cliente")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class Cliente extends Persona {
+    
+    @Column(name = "clienteid", unique = true)
     private String clienteid;
+    
+    @Column(name = "contrasena")
     private String contrasena;
+    
+    @Column(name = "estado")
     private String estado;
-
-    @ManyToOne
-    @JoinColumn(name = "identificacion", referencedColumnName = "identificacion")
-    private Persona persona;
-
-    public String getClienteid() { return clienteid; }
-    public void setClienteid(String clienteid) { this.clienteid = clienteid; }
-    public String getContrasena() { return contrasena; }
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-    public Persona getPersona() { return persona; }
-    public void setPersona(Persona persona) { this.persona = persona; }
 } 
